@@ -25,7 +25,12 @@
   </properties>
 
   <dependencies>
-    <dependency>
+      <dependency>
+		<groupId>org.brackit</groupId>
+		<artifactId>brackitrel</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</dependency>  
+      <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
@@ -51,5 +56,20 @@
 	    <artifactId>log4j</artifactId>
 	    <version>1.2.16</version>
 	</dependency>
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.21</version>
+	</dependency>
+	<dependency>
+		<groupId>c3p0</groupId>
+		<artifactId>c3p0</artifactId>
+		<version>0.9.1.2</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.brackit</groupId>
+		<artifactId>berkeleydb</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>			
   </dependencies>
 </project>

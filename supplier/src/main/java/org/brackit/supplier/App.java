@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.brackit.supplier.compiler.MongoDBQueryCompiler;
+import org.brackit.supplier.compiler.RelationalCompilerChain;
 import org.brackit.supplier.io.helper.IOHelper;
 import org.brackit.supplier.store.DataStore;
 import org.brackit.xquery.QueryContext;
@@ -37,12 +37,11 @@ public class App
 	private static IOHelper ioHelper = new IOHelper();
 	private static final Logger logger = Logger.getLogger(App.class);
 	
-    public static void main( String[] args ) throws IOException, QueryException
-    {
+    public static void main( String[] args ) throws IOException, QueryException{
     	logger.debug("Start");
-    	String content = ioHelper.getContent(new File("c:/test.xq"));
+    	String content = ioHelper.getContent(new File("c:/test1.xq"));
     	logger.debug("Query \n"+content);
-    	XQuery xq = new XQuery(new MongoDBQueryCompiler(), content);
+    	XQuery xq = new XQuery(new RelationalCompilerChain(), content);
     	xq.setPrettyPrint(true);
 		QueryContext ctx = new QueryContext(new DataStore());
 		

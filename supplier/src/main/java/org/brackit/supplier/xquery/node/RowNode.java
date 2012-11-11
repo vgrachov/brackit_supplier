@@ -11,7 +11,18 @@
 package org.brackit.supplier.xquery.node;
 
 import org.apache.log4j.Logger;
+import org.brackit.berkeleydb.Schema;
+import org.brackit.berkeleydb.tuple.AtomicChar;
+import org.brackit.berkeleydb.tuple.AtomicDate;
+import org.brackit.berkeleydb.tuple.AtomicDouble;
+import org.brackit.berkeleydb.tuple.AtomicInteger;
+import org.brackit.berkeleydb.tuple.AtomicString;
+import org.brackit.berkeleydb.tuple.ColumnType;
+import org.brackit.berkeleydb.tuple.Tuple;
 import org.brackit.xquery.atomic.Atomic;
+import org.brackit.xquery.atomic.Date;
+import org.brackit.xquery.atomic.Dbl;
+import org.brackit.xquery.atomic.Int;
 import org.brackit.xquery.atomic.QNm;
 import org.brackit.xquery.atomic.Str;
 import org.brackit.xquery.node.parser.SubtreeHandler;
@@ -23,23 +34,21 @@ public class RowNode extends AbstractRDBMSNode {
 
 	private static final Logger logger = Logger.getLogger(RowNode.class);
 	
-	private Atomic[] values;
-
-	private static int rowCounter = 0;
+	private final Tuple tuple;
+	private final Schema schema;
 	
-	public RowNode(TableNode tableNode) throws DocumentException{
-		super(NodeType.Row, new QNm("row"), tableNode);
-		values = new Atomic[5];
-		for (int i=0;i<5;i++)
-			values[i] = new Str(String.valueOf(i));
-		rowCounter++;
+	
+	public RowNode(Tuple tuple, Schema schema) throws DocumentException{
+		super(NodeType.Row, new QNm("row"), null);
+		this.tuple = tuple;
+		this.schema = schema;
 	}
 	
 	@Override
 	public Atomic getValue() throws DocumentException {
 		StringBuilder sb = new StringBuilder();
-		for (int i=0;i<values.length;i++)
-			sb.append(values[i]);
+		for (int i=0;i<tuple.getFields().length;i++)
+			sb.append(tuple.getFields()[i]);
 		return new Str(sb.toString());
 	}
 
@@ -55,14 +64,35 @@ public class RowNode extends AbstractRDBMSNode {
 		return new Stream<FieldNode>() {
 			private int counter = 0;
 			public FieldNode next() throws DocumentException {
-				counter++;
-				if (counter == 1)
-					return new FieldNode(new QNm("name"), RowNode.this, new Str("name"+rowCounter));
-				else
-				if (counter == 2)
-					return new FieldNode(new QNm("login"), RowNode.this, new Str("login"+rowCounter));
-				
-				return null;
+				if (counter<schema.getColumns().length){
+					//logger.debug(schema.getColumns()[counter].getColumnName().toLowerCase());
+					//logger.debug(tuple);
+					logger.debug(tuple.getFields()[counter].toString());
+					FieldNode fieldNode = null;
+					if (schema.getColumns()[counter].getType() == ColumnType.String)
+						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName().toLowerCase()), RowNode.this, new Str(tuple.getFields()[counter].toString()));
+					else
+					if (schema.getColumns()[counter].getType() == ColumnType.Integer)
+						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName().toLowerCase()), RowNode.this, new Int(((AtomicInteger)tuple.getFields()[counter]).getData()));
+					else
+					if (schema.getColumns()[counter].getType() == ColumnType.Double)
+						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName().toLowerCase()), RowNode.this, new Dbl(((AtomicDouble)tuple.getFields()[counter]).getData()));
+					else
+					if (schema.getColumns()[counter].getType() == ColumnType.Char)
+						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName().toLowerCase()), RowNode.this, new Str(tuple.getFields()[counter].toString()));
+					else
+					if (schema.getColumns()[counter].getType() == ColumnType.Date){
+						AtomicDate atomicDate = (AtomicDate)tuple.getFields()[counter];
+						//String date = String.valueOf(atomicDate.getData().getYear()+1900)+"-"+String.valueOf(atomicDate.getData().getMonth())+"-"+String.valueOf(atomicDate.getData().getDay());
+						//logger.info(date);
+						Date date = new Date((short)(atomicDate.getData().getYear()+1900),(byte)atomicDate.getData().getMonth(),(byte)atomicDate.getData().getDay(),null);
+						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName().toLowerCase()), RowNode.this, new Date((short)(atomicDate.getData().getYear()+1900),(byte)atomicDate.getData().getMonth(),(byte)atomicDate.getData().getDay(),null));
+					}else
+						throw new IllegalArgumentException();
+					counter++;
+					return fieldNode;
+				}else
+					return null;
 			}
 
 			public void close() {
@@ -84,9 +114,9 @@ public class RowNode extends AbstractRDBMSNode {
 		handler.beginFragment();
 		handler.startElement(new QNm("values"));
 		StringBuilder valuesSerializeBuffer = new StringBuilder();
-		for (int i=0;i<values.length;i++){
-			valuesSerializeBuffer.append(values[i]);
-			if (i!=values.length-1)
+		for (int i=0;i<tuple.getFields().length;i++){
+			valuesSerializeBuffer.append(tuple.getFields()[i]);
+			if (i!=tuple.getFields().length-1)
 				valuesSerializeBuffer.append(",");
 		}
 		handler.text(new QNm(valuesSerializeBuffer.toString()));

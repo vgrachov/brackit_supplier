@@ -140,7 +140,7 @@ public abstract class AbstractRDBMSNode extends AbstractNode<AbstractRDBMSNode> 
 	}
 
 	public QNm getName() throws DocumentException {
-		logger.debug("get Name call " + nodeName);
+		//logger.debug("get Name call " + nodeName);
 		return nodeName;
 	}
 
