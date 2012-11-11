@@ -15,7 +15,7 @@
  ******************************************************************************/
 package org.brackit.supplier.access;
 
-public final class RightRangeAccessColumn extends AccessColumn {
+public final class RightRangeAccessColumn extends RangeAccessColumn {
 
 	private final org.brackit.xquery.atomic.Atomic rightKey;
 

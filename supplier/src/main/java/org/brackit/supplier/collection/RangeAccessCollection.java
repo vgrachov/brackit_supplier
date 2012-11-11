@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package org.brackit.supplier.xquery.node;
+package org.brackit.supplier.collection;
 
 
 
@@ -33,6 +33,11 @@ import org.brackit.berkeleydb.tuple.Column;
 import org.brackit.berkeleydb.tuple.ColumnType;
 import org.brackit.berkeleydb.tuple.Tuple;
 import org.brackit.supplier.access.FullRangeAccessColumn;
+import org.brackit.supplier.access.LeftRangeAccessColumn;
+import org.brackit.supplier.access.RangeAccessColumn;
+import org.brackit.supplier.access.RightRangeAccessColumn;
+import org.brackit.supplier.xquery.node.AbstractRDBMSNode;
+import org.brackit.supplier.xquery.node.RowNode;
 import org.brackit.xquery.atomic.Dec;
 import org.brackit.xquery.atomic.Int32;
 import org.brackit.xquery.atomic.Str;
@@ -42,13 +47,13 @@ import org.brackit.xquery.xdm.DocumentException;
 import org.brackit.xquery.xdm.OperationNotSupportedException;
 import org.brackit.xquery.xdm.Stream;
 
-public class RangeAccessRowCollection extends AbstractCollection<AbstractRDBMSNode> {
+public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode> {
 
-	private final FullRangeAccessColumn accessColumn;
-	private static final Logger logger = Logger.getLogger(RangeAccessRowCollection.class);
+	private final RangeAccessColumn accessColumn;
+	private static final Logger logger = Logger.getLogger(RangeAccessCollection.class);
 	
 	
-	public RangeAccessRowCollection(FullRangeAccessColumn accessColumn) {
+	public RangeAccessCollection(RangeAccessColumn accessColumn) {
 		super(accessColumn.getTableName());
 		this.accessColumn = accessColumn;
 	}
@@ -68,6 +73,19 @@ public class RangeAccessRowCollection extends AbstractCollection<AbstractRDBMSNo
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private Atomic getAtomicBerkeleyDBValue(Column column, org.brackit.xquery.atomic.Atomic accessColumnKey){
+		if (column.getType() == ColumnType.String){
+			return new AtomicString(column.getColumnName(), ((Str)accessColumnKey).stringValue());
+		}else
+		if (column.getType() == ColumnType.Integer){
+			return new AtomicInteger(column.getColumnName(), ((Int32)accessColumnKey).intValue());
+		}else
+		if (column.getType() == ColumnType.Double){
+			return new AtomicDouble(column.getColumnName(), ((Dec)accessColumnKey).doubleValue());
+		}else
+			throw new IllegalArgumentException("Not supported type for index scan");
+	}
 
 	public Stream<? extends AbstractRDBMSNode> getDocuments()
 			throws DocumentException {
@@ -82,21 +100,19 @@ public class RangeAccessRowCollection extends AbstractCollection<AbstractRDBMSNo
 			throw new IllegalArgumentException("Column with name "+accessColumn.getAccessColumn()+" is not found");
 		if (!column.isDirectIndexExist())
 			throw new IllegalArgumentException("Column "+accessColumn.getAccessColumn()+" don't have index");
-		Atomic leftKey = null;
 		Atomic rightKey = null;
-		if (column.getType() == ColumnType.String){
-			leftKey = new AtomicString(column.getColumnName(), ((Str)accessColumn.getLeftKey()).stringValue());
-			rightKey = new AtomicString(column.getColumnName(), ((Str)accessColumn.getRightKey()).stringValue());
+		Atomic leftKey = null;
+		if (accessColumn instanceof FullRangeAccessColumn){
+			leftKey = getAtomicBerkeleyDBValue(column,((FullRangeAccessColumn)accessColumn).getLeftKey());
+			rightKey = getAtomicBerkeleyDBValue(column,((FullRangeAccessColumn)accessColumn).getRightKey());
 		}else
-		if (column.getType() == ColumnType.Integer){
-			leftKey = new AtomicInteger(column.getColumnName(), ((Int32)accessColumn.getLeftKey()).intValue());
-			rightKey = new AtomicInteger(column.getColumnName(), ((Int32)accessColumn.getRightKey()).intValue());
+		if (accessColumn instanceof RightRangeAccessColumn){
+			rightKey = getAtomicBerkeleyDBValue(column,((RightRangeAccessColumn)accessColumn).getRightKey());
 		}else
-		if (column.getType() == ColumnType.Double){
-			leftKey = new AtomicDouble(column.getColumnName(), ((Dec)accessColumn.getLeftKey()).doubleValue());
-			rightKey = new AtomicDouble(column.getColumnName(), ((Dec)accessColumn.getRightKey()).doubleValue());
+		if (accessColumn instanceof LeftRangeAccessColumn){
+			leftKey = getAtomicBerkeleyDBValue(column,((LeftRangeAccessColumn)accessColumn).getLeftKey());
 		}else
-			throw new IllegalArgumentException("Not supported type for index scan");
+			throw new IllegalArgumentException("Such range access method is not supported");
 			
 		//Column column, Atomic leftKey, Atomic rightKey
 		final ITupleCursor tupleCursor = new RangeIndexSearchCursor(column,leftKey,rightKey);

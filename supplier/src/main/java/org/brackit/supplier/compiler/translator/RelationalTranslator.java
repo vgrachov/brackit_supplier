@@ -1,12 +1,17 @@
 /*******************************************************************************
- * Copyright (c) 2012 Volodymyr Grachov.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the GNU Public License v3.0
- * which accompanies this distribution, and is available at
- * http://www.gnu.org/licenses/gpl.html
+ * Copyright 2012 Volodymyr Grachov
  * 
- * Contributors:
- *     Volodymyr Grachov - initial API and implementation
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  ******************************************************************************/
 package org.brackit.supplier.compiler.translator;
 
@@ -22,8 +27,11 @@ import org.brackit.relational.xquery.function.fn.RowCollectionFunction;
 import org.brackit.supplier.access.AccessColumn;
 import org.brackit.supplier.access.EqualAccessColumn;
 import org.brackit.supplier.access.FullRangeAccessColumn;
+import org.brackit.supplier.access.LeftRangeAccessColumn;
+import org.brackit.supplier.access.RangeAccessColumn;
+import org.brackit.supplier.access.RightRangeAccessColumn;
+import org.brackit.supplier.collection.RangeAccessCollection;
 import org.brackit.supplier.function.RangeAccessFunction;
-import org.brackit.supplier.xquery.node.RangeAccessRowCollection;
 import org.brackit.xquery.QueryException;
 import org.brackit.xquery.atomic.AbstractAtomic;
 import org.brackit.xquery.atomic.Atomic;
@@ -116,11 +124,13 @@ public class RelationalTranslator extends TopDownTranslator {
 				AST accessNode = comparisonExpresions.get(j);
 				QNm accessFieldQNm = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
 				if (accessFieldQNm.getLocalName().equals(accessField)){
-					if (accessNode.getChild(0).getType()==XQ.GeneralCompLE || accessNode.getChild(0).getType()==XQ.GeneralCompLT){
+					if (accessNode.getChild(0).getType()==XQ.GeneralCompLE || accessNode.getChild(0).getType()==XQ.GeneralCompLT ||
+						accessNode.getChild(0).getType()==XQ.ValueCompLE || accessNode.getChild(0).getType()==XQ.ValueCompLT){
 						isRightRangeFound = true;
 						rightKey = getValueFromNode(accessNode.getChild(2));
 					}else
-					if (accessNode.getChild(0).getType()==XQ.GeneralCompGE || accessNode.getChild(0).getType()==XQ.GeneralCompGT){
+					if (accessNode.getChild(0).getType()==XQ.GeneralCompGE || accessNode.getChild(0).getType()==XQ.GeneralCompGT ||
+						accessNode.getChild(0).getType()==XQ.ValueCompGE || accessNode.getChild(0).getType()==XQ.ValueCompGT){
 						isLeftRangeFound = true;
 						leftKey = getValueFromNode(accessNode.getChild(2));
 					}
@@ -133,15 +143,54 @@ public class RelationalTranslator extends TopDownTranslator {
 		return null;
 	}
 	
+	private RightRangeAccessColumn findFirstRightRangeAccessPredicate(List<AST> comparisonExpresions, Str tableName){
+		for (int i=0;i<comparisonExpresions.size();i++){
+			AST accessNode = comparisonExpresions.get(i);
+			if (accessNode.getChild(0).getType()==XQ.GeneralCompLE || accessNode.getChild(0).getType()==XQ.GeneralCompLT ||
+				accessNode.getChild(0).getType()==XQ.ValueCompLE || accessNode.getChild(0).getType()==XQ.ValueCompLT){
+				QNm accessField = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
+				Atomic rightKey = getValueFromNode(accessNode.getChild(2));
+				return new RightRangeAccessColumn(null, tableName.stringValue(), accessField.getLocalName(), rightKey);
+			}
+		}
+		return null;
+	}
+
+	private LeftRangeAccessColumn findFirstLeftRangeAccessPredicate(List<AST> comparisonExpresions, Str tableName){
+		for (int i=0;i<comparisonExpresions.size();i++){
+			AST accessNode = comparisonExpresions.get(i);
+			if (accessNode.getChild(0).getType()==XQ.GeneralCompGE || accessNode.getChild(0).getType()==XQ.GeneralCompGT ||
+				accessNode.getChild(0).getType()==XQ.ValueCompGE || accessNode.getChild(0).getType()==XQ.ValueCompGT){
+				QNm accessField = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
+				Atomic rightKey = getValueFromNode(accessNode.getChild(2));
+				return new LeftRangeAccessColumn(null, tableName.stringValue(), accessField.getLocalName(), rightKey);
+			}
+		}
+		return null;
+	}
+	
 	private AccessColumn selectAccessColumn(List<AST> comparisonExpresions, Str tableName){
 		logger.debug("Access table : "+tableName);
-		/*EqualAccessColumn equalAccessColumn = findEqualAccessPredicate(comparisonExpresions, tableName);
-		if (equalAccessColumn==null)
+		EqualAccessColumn equalAccessColumn = findEqualAccessPredicate(comparisonExpresions, tableName);
+		if (equalAccessColumn!=null)
 			return equalAccessColumn;
-		else{*/
+		else{
 			FullRangeAccessColumn fullRangeAccessColumn = findFullRangeAccessColumn(comparisonExpresions, tableName);
-			return fullRangeAccessColumn;
-		//}
+			if (fullRangeAccessColumn!=null)
+				return fullRangeAccessColumn;
+			else{
+				RightRangeAccessColumn rightRangeAccessColumn = findFirstRightRangeAccessPredicate(comparisonExpresions, tableName);
+				if (rightRangeAccessColumn!=null)
+					return rightRangeAccessColumn;
+				else{
+					LeftRangeAccessColumn leftRangeAccessColumn = findFirstLeftRangeAccessPredicate(comparisonExpresions, tableName);
+					if (leftRangeAccessColumn!=null)
+						return leftRangeAccessColumn;
+					else return null;
+				}
+					
+			}
+		}
 	}
 	
 	protected Operator anyOp(Operator in, AST node) throws QueryException {
@@ -172,8 +221,13 @@ public class RelationalTranslator extends TopDownTranslator {
 				Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
 				AccessColumn accessColumn = selectAccessColumn(comparisonExpresions,tableName);
 				if (accessColumn!=null){
-					Function fn = new RangeAccessFunction((FullRangeAccessColumn)accessColumn);
-					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
+					if (accessColumn instanceof RangeAccessColumn){
+						Function fn = new RangeAccessFunction((RangeAccessColumn)accessColumn);
+						return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
+					}else{
+						//TODO: equal match
+						return super.anyExpr(node);
+					}
 				}
 			}
 		}

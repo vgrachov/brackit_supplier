@@ -17,7 +17,8 @@ package org.brackit.supplier.function;
 
 import org.brackit.relational.xquery.xdm.RowCollection;
 import org.brackit.supplier.access.FullRangeAccessColumn;
-import org.brackit.supplier.xquery.node.RangeAccessRowCollection;
+import org.brackit.supplier.access.RangeAccessColumn;
+import org.brackit.supplier.collection.RangeAccessCollection;
 import org.brackit.xquery.QueryContext;
 import org.brackit.xquery.QueryException;
 import org.brackit.xquery.atomic.QNm;
@@ -37,9 +38,9 @@ public class RangeAccessFunction extends Collection{
 			new SequenceType(DocumentType.DOC, Cardinality.ZeroOrMany),
 			new SequenceType(AtomicType.STR, Cardinality.ZeroOrOne));
 	
-	private final FullRangeAccessColumn accessColumn;
+	private final RangeAccessColumn accessColumn;
 	
-	public RangeAccessFunction(FullRangeAccessColumn accessColumn){
+	public RangeAccessFunction(RangeAccessColumn accessColumn){
 		super(FN_COLLECTION, SIGNATURE);
 		this.accessColumn = accessColumn;
 	}
@@ -48,7 +49,7 @@ public class RangeAccessFunction extends Collection{
 	public Sequence execute(StaticContext sctx, QueryContext ctx,
 			Sequence[] args) throws QueryException
 	{
-		RangeAccessRowCollection rangeAccessRowCollection = new RangeAccessRowCollection(accessColumn);
+		RangeAccessCollection rangeAccessRowCollection = new RangeAccessCollection(accessColumn);
 		return rangeAccessRowCollection;
 	}
 

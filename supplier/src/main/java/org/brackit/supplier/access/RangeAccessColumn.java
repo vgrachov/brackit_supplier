@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package org.brackit.supplier.xquery.node;
+package org.brackit.supplier.access;
 
-/**
- * 
- * @author Volodymyr Grachov
- *
- */
-public enum NodeType {
-	Table,
-	Row,
-	Field
+public class RangeAccessColumn extends AccessColumn {
+
+	public RangeAccessColumn(String bindVariable, String tableName, String accessColumn){
+		super(bindVariable, tableName, accessColumn);
+	}
+	
 }
