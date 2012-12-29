@@ -23,6 +23,7 @@ import org.brackit.supplier.compiler.translator.RelationalTranslator;
 import org.brackit.xquery.atomic.QNm;
 import org.brackit.xquery.atomic.Str;
 import org.brackit.xquery.compiler.CompileChain;
+import org.brackit.xquery.compiler.optimizer.DefaultOptimizer;
 import org.brackit.xquery.compiler.optimizer.Optimizer;
 import org.brackit.xquery.compiler.optimizer.TopDownOptimizer;
 import org.brackit.xquery.compiler.translator.TopDownTranslator;

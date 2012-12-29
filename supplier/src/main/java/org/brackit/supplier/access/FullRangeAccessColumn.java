@@ -15,8 +15,6 @@
  ******************************************************************************/
 package org.brackit.supplier.access;
 
-import org.brackit.berkeleydb.tuple.Column;
-
 public final class FullRangeAccessColumn extends RangeAccessColumn {
 	
 	private final org.brackit.xquery.atomic.Atomic leftKey,rightKey;

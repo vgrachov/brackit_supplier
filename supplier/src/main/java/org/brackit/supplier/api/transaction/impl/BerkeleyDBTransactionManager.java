@@ -25,20 +25,42 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-package org.brackit.supplier.access;
 
-public final class LeftRangeAccessColumn extends RangeAccessColumn {
+package org.brackit.supplier.api.transaction.impl;
 
-	private final org.brackit.xquery.atomic.Atomic leftKey;
+import org.brackit.berkeleydb.environment.BerkeleyDBEnvironment;
+import org.brackit.supplier.api.transaction.ITransaction;
+import org.brackit.supplier.api.transaction.ITransactionManager;
+import org.brackit.supplier.api.transaction.TransactionException;
 
-	public LeftRangeAccessColumn(String bindVariable, String tableName,
-			String accessColumn, org.brackit.xquery.atomic.Atomic leftKey) {
-		super(bindVariable,tableName,accessColumn);
-		this.leftKey = leftKey;
+import com.sleepycat.db.DatabaseException;
+import com.sleepycat.db.Environment;
+import com.sleepycat.db.Transaction;
+import com.sleepycat.db.TransactionConfig;
+
+public class BerkeleyDBTransactionManager implements ITransactionManager {
+
+	private Environment environment;
+	private ThreadLocal<ITransaction> transactions;
+	
+	public BerkeleyDBTransactionManager(){
+		environment = BerkeleyDBEnvironment.getInstance().getEnv();
+		transactions = new ThreadLocal<ITransaction>();
 	}
-
-	public org.brackit.xquery.atomic.Atomic getLeftKey() {
-		return leftKey;
+	
+	public ITransaction begin() throws TransactionException {
+		TransactionConfig transactionConfig = TransactionConfig.DEFAULT;
+		try {
+			Transaction transaction = environment.beginTransaction(null, transactionConfig);
+			transactions.set(new BerkeleyDBTransaction(transaction));
+			return transactions.get();
+		} catch (DatabaseException e) {
+			throw new TransactionException(e.getMessage());
+		}
+	}
+	
+	public ITransaction getCurrentTransaction() throws TransactionException{
+		return transactions.get();
 	}
 
 }

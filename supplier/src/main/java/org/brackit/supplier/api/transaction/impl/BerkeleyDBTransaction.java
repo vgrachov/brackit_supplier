@@ -25,20 +25,45 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-package org.brackit.supplier.access;
 
-public final class LeftRangeAccessColumn extends RangeAccessColumn {
+package org.brackit.supplier.api.transaction.impl;
 
-	private final org.brackit.xquery.atomic.Atomic leftKey;
+import org.apache.log4j.Logger;
+import org.brackit.supplier.api.transaction.ITransaction;
+import org.brackit.supplier.api.transaction.TransactionException;
 
-	public LeftRangeAccessColumn(String bindVariable, String tableName,
-			String accessColumn, org.brackit.xquery.atomic.Atomic leftKey) {
-		super(bindVariable,tableName,accessColumn);
-		this.leftKey = leftKey;
+import com.sleepycat.db.DatabaseException;
+import com.sleepycat.db.Transaction;
+
+public class BerkeleyDBTransaction implements ITransaction {
+
+	private final Transaction transaction;
+	private static final Logger logger = Logger.getLogger(BerkeleyDBTransaction.class);
+	
+	public BerkeleyDBTransaction(Transaction transaction){
+		this.transaction = transaction;
+	}
+	
+	public void commit() throws TransactionException {
+		try{
+			transaction.commit();
+			logger.info("Transaction is commited");
+		} catch (DatabaseException e) {
+			throw new TransactionException(e.getMessage());
+		}
 	}
 
-	public org.brackit.xquery.atomic.Atomic getLeftKey() {
-		return leftKey;
+	public void abort() throws TransactionException {
+		try{
+			transaction.abort();
+			logger.info("Transaction is aborted");
+		} catch (DatabaseException e) {
+			throw new TransactionException(e.getMessage());
+		}
+	}
+	
+	public Transaction get(){
+		return transaction;
 	}
 
 }

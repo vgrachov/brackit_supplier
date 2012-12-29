@@ -25,48 +25,72 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-package org.brackit.supplier.function;
 
-import org.brackit.relational.xquery.xdm.RowCollection;
-import org.brackit.supplier.RelationalQueryContext;
+package org.brackit.supplier.store;
+
+import org.apache.log4j.Logger;
 import org.brackit.supplier.access.AccessColumn;
-import org.brackit.supplier.access.FullRangeAccessColumn;
-import org.brackit.supplier.access.RangeAccessColumn;
 import org.brackit.supplier.api.transaction.ITransaction;
+import org.brackit.supplier.api.transaction.ITransactionManager;
+import org.brackit.supplier.api.transaction.TransactionException;
+import org.brackit.supplier.collection.FullScanCollection;
 import org.brackit.supplier.collection.RangeAccessCollection;
-import org.brackit.xquery.QueryContext;
-import org.brackit.xquery.QueryException;
-import org.brackit.xquery.atomic.QNm;
-import org.brackit.xquery.function.fn.Collection;
-import org.brackit.xquery.module.Namespaces;
-import org.brackit.xquery.module.StaticContext;
-import org.brackit.xquery.xdm.Sequence;
-import org.brackit.xquery.xdm.Signature;
-import org.brackit.xquery.xdm.type.AtomicType;
-import org.brackit.xquery.xdm.type.Cardinality;
-import org.brackit.xquery.xdm.type.DocumentType;
-import org.brackit.xquery.xdm.type.SequenceType;
+import org.brackit.xquery.atomic.Atomic;
+import org.brackit.xquery.node.parser.SubtreeParser;
+import org.brackit.xquery.xdm.Collection;
+import org.brackit.xquery.xdm.DocumentException;
+import org.brackit.xquery.xdm.Store;
+import org.brackit.xquery.xdm.Stream;
 
-public class RangeAccessFunction extends Collection{
-	public static final QNm FN_COLLECTION = new QNm(Namespaces.FN_NSURI, Namespaces.FN_PREFIX, "collection");
-	public static final Signature SIGNATURE = new Signature(
-			new SequenceType(DocumentType.DOC, Cardinality.ZeroOrMany),
-			new SequenceType(AtomicType.STR, Cardinality.ZeroOrOne));
+public class RelationalDataStore implements IRelationalStore {
+
+	private static final Logger logger = Logger.getLogger(RelationalDataStore.class);
 	
-	private final AccessColumn accessColumn;
-	
-	public RangeAccessFunction(AccessColumn accessColumn){
-		super(FN_COLLECTION, SIGNATURE);
-		this.accessColumn = accessColumn;
+	public RelationalDataStore(){
+
 	}
 	
-	@Override
-	public Sequence execute(StaticContext sctx, QueryContext ctx,
-			Sequence[] args) throws QueryException
-	{
-		RelationalQueryContext context = (RelationalQueryContext)ctx;
-		ITransaction transaction = context.getTransaction();
-		return context.getStore().rangeAccess(accessColumn,transaction);
+	public Collection<?> lookup(String name) throws DocumentException {
+		throw new RuntimeException();
+	}
+
+	public Collection<?> create(String name) throws DocumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<?> create(String name, SubtreeParser parser)
+			throws DocumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<?> create(String name, Stream<SubtreeParser> parsers)
+			throws DocumentException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void drop(String name) throws DocumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void makeDir(String path) throws DocumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Collection<?> rangeAccess(AccessColumn column, ITransaction transaction) throws DocumentException{
+		if (logger.isDebugEnabled())
+			logger.info("Try look up "+column.getTableName());
+		return new RangeAccessCollection(column,transaction);
+	}
+
+	public Collection<?> fullscan(String tableName, ITransaction transaction) throws DocumentException {
+		if (logger.isDebugEnabled())
+			logger.info("Try look up "+tableName);
+		return new FullScanCollection(tableName,transaction);
 	}
 
 }

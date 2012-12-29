@@ -25,20 +25,30 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-package org.brackit.supplier.access;
 
-public final class LeftRangeAccessColumn extends RangeAccessColumn {
+package org.brackit.supplier;
 
-	private final org.brackit.xquery.atomic.Atomic leftKey;
+import org.brackit.supplier.api.transaction.ITransaction;
+import org.brackit.supplier.store.IRelationalStore;
+import org.brackit.xquery.QueryContext;
+import org.brackit.xquery.xdm.Store;
 
-	public LeftRangeAccessColumn(String bindVariable, String tableName,
-			String accessColumn, org.brackit.xquery.atomic.Atomic leftKey) {
-		super(bindVariable,tableName,accessColumn);
-		this.leftKey = leftKey;
+public class RelationalQueryContext extends QueryContext{
+
+	private final ITransaction transaction;
+	
+	public RelationalQueryContext(IRelationalStore store, ITransaction transaction) {
+		super(store);
+		this.transaction = transaction;
 	}
 
-	public org.brackit.xquery.atomic.Atomic getLeftKey() {
-		return leftKey;
+	public ITransaction getTransaction() {
+		return transaction;
 	}
 
+	@Override
+	public IRelationalStore getStore() {
+		return (IRelationalStore)super.getStore();
+	}
+	
 }

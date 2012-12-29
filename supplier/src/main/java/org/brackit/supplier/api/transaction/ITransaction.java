@@ -25,20 +25,13 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-package org.brackit.supplier.access;
 
-public final class LeftRangeAccessColumn extends RangeAccessColumn {
+package org.brackit.supplier.api.transaction;
 
-	private final org.brackit.xquery.atomic.Atomic leftKey;
-
-	public LeftRangeAccessColumn(String bindVariable, String tableName,
-			String accessColumn, org.brackit.xquery.atomic.Atomic leftKey) {
-		super(bindVariable,tableName,accessColumn);
-		this.leftKey = leftKey;
-	}
-
-	public org.brackit.xquery.atomic.Atomic getLeftKey() {
-		return leftKey;
-	}
-
+public interface ITransaction {
+	
+	void commit() throws TransactionException;
+	
+	void abort() throws TransactionException;
+	
 }

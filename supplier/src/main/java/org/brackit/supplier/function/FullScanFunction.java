@@ -25,20 +25,45 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-package org.brackit.supplier.access;
 
-public final class LeftRangeAccessColumn extends RangeAccessColumn {
+package org.brackit.supplier.function;
 
-	private final org.brackit.xquery.atomic.Atomic leftKey;
+import org.brackit.supplier.RelationalQueryContext;
+import org.brackit.supplier.api.transaction.ITransaction;
+import org.brackit.xquery.QueryContext;
+import org.brackit.xquery.QueryException;
+import org.brackit.xquery.atomic.QNm;
+import org.brackit.xquery.function.fn.Collection;
+import org.brackit.xquery.module.Namespaces;
+import org.brackit.xquery.module.StaticContext;
+import org.brackit.xquery.xdm.Sequence;
+import org.brackit.xquery.xdm.Signature;
+import org.brackit.xquery.xdm.type.AtomicType;
+import org.brackit.xquery.xdm.type.Cardinality;
+import org.brackit.xquery.xdm.type.DocumentType;
+import org.brackit.xquery.xdm.type.SequenceType;
 
-	public LeftRangeAccessColumn(String bindVariable, String tableName,
-			String accessColumn, org.brackit.xquery.atomic.Atomic leftKey) {
-		super(bindVariable,tableName,accessColumn);
-		this.leftKey = leftKey;
+public class FullScanFunction extends Collection{
+	public static final QNm FN_COLLECTION = new QNm(Namespaces.FN_NSURI, Namespaces.FN_PREFIX, "collection");
+	public static final Signature SIGNATURE = new Signature(
+			new SequenceType(DocumentType.DOC, Cardinality.ZeroOrMany),
+			new SequenceType(AtomicType.STR, Cardinality.ZeroOrOne));
+	
+	private final String tableName;
+	
+	public FullScanFunction(String tableName){
+		super(FN_COLLECTION, SIGNATURE);
+		this.tableName = tableName;
 	}
-
-	public org.brackit.xquery.atomic.Atomic getLeftKey() {
-		return leftKey;
+	
+	@Override
+	public Sequence execute(StaticContext sctx, QueryContext ctx,
+			Sequence[] args) throws QueryException
+	{
+		RelationalQueryContext context = (RelationalQueryContext)ctx;
+		ITransaction transaction = context.getTransaction();
+		return context.getStore().fullscan(tableName,transaction);
 	}
 
 }
+

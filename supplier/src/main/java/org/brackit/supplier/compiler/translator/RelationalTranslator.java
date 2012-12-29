@@ -31,6 +31,7 @@ import org.brackit.supplier.access.LeftRangeAccessColumn;
 import org.brackit.supplier.access.RangeAccessColumn;
 import org.brackit.supplier.access.RightRangeAccessColumn;
 import org.brackit.supplier.collection.RangeAccessCollection;
+import org.brackit.supplier.function.FullScanFunction;
 import org.brackit.supplier.function.RangeAccessFunction;
 import org.brackit.xquery.QueryException;
 import org.brackit.xquery.atomic.AbstractAtomic;
@@ -63,7 +64,7 @@ public class RelationalTranslator extends TopDownTranslator {
 			return new ArrayList<AST>();
 		List<AST> comparisonPredicates = new ArrayList<AST>();
 		for (int i=0;i<node.getChildCount();i++)
-			if (node.getChild(i).getType() == XQ.ComparisonExpr)
+			if (node.getChild(i).getType() == XQ.ComparisonExpr && node.getChild(i).getChildCount()==3 && node.getChild(i).getChild(1).getType()==XQ.PathExpr && node.getChild(i).getChild(2).getType()!=XQ.PathExpr)
 				comparisonPredicates.add(node.getChild(i));
 		for (int i=0;i<node.getChildCount();i++)
 			if (node.getChild(i).getType() == XQ.AndExpr || node.getChild(i).getType() == XQ.OrExpr){
@@ -194,19 +195,7 @@ public class RelationalTranslator extends TopDownTranslator {
 	}
 	
 	protected Operator anyOp(Operator in, AST node) throws QueryException {
-		/*logger.debug("Found operation : "+node.getStringValue()+" "+node.getType());
-		if (node.getType() == XQ.ForBind && node.getChildCount()==3 && node.getChild(2).getType()==XQ.Selection){
-			logger.debug("Found selection");
-			List<AST> comparisonExpresions = foundPredicates(node.getChild(2));
-			Str tableName = (Str)node.getChild(1).getChild(0).getValue();
-			AccessColumn accessColumn = selectAccessColumn(comparisonExpresions,tableName);
-			if (accessColumn!=null){
-				Function fn = new RangeAccessFunction((FullRangeAccessColumn)accessColumn);
-				return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
-				
-			}
-			return super.anyOp(in, node);
-		}*/
+		logger.debug("Found operation : "+node.getStringValue()+" "+node.getType());
 		return super.anyOp(in, node);
 	}
 	
@@ -222,14 +211,28 @@ public class RelationalTranslator extends TopDownTranslator {
 				AccessColumn accessColumn = selectAccessColumn(comparisonExpresions,tableName);
 				if (accessColumn!=null){
 					if (accessColumn instanceof RangeAccessColumn){
+						System.out.println("Found range acess "+((RangeAccessColumn)accessColumn).getAccessColumn());
 						Function fn = new RangeAccessFunction((RangeAccessColumn)accessColumn);
 						return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 					}else{
-						//TODO: equal match
+						if (accessColumn instanceof EqualAccessColumn){
+							System.out.println("Found equal match "+((EqualAccessColumn)accessColumn).getAccessColumn());
+							System.out.println("Found equal value "+((EqualAccessColumn)accessColumn).getKey());
+							Function fn = new RangeAccessFunction((EqualAccessColumn)accessColumn);
+							return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
+						}else
 						return super.anyExpr(node);
 					}
+				}else{
+					Function fn = new FullScanFunction(tableName.stringValue());
+					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 				}
-			}
+			}else
+				if (parent!=null && parent.getType()==XQ.ForBind && parent.getChildCount()==3){
+					Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
+					Function fn = new FullScanFunction(tableName.stringValue());
+					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
+				}
 		}
 		return super.anyExpr(node);
 	}
