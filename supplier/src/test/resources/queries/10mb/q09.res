@@ -1,0 +1,870 @@
+<product_type_profit_measure>
+    ALGERIA
+    <year>1998-</year>
+    <sum_profit>386617.8283</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ALGERIA
+    <year>1997-</year>
+    <sum_profit>401601.1258000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ALGERIA
+    <year>1996-</year>
+    <sum_profit>156938.7971</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ALGERIA
+    <year>1995-</year>
+    <sum_profit>486706.0631000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ALGERIA
+    <year>1994-</year>
+    <sum_profit>426573.4415</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ALGERIA
+    <year>1993-</year>
+    <sum_profit>448371.43359999993</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ALGERIA
+    <year>1992-</year>
+    <sum_profit>285188.4503</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ARGENTINA
+    <year>1998-</year>
+    <sum_profit>136458.34709999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ARGENTINA
+    <year>1997-</year>
+    <sum_profit>423877.67539999995</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ARGENTINA
+    <year>1996-</year>
+    <sum_profit>325019.62629999995</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ARGENTINA
+    <year>1995-</year>
+    <sum_profit>399583.40089999995</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ARGENTINA
+    <year>1994-</year>
+    <sum_profit>374046.78880000004</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ARGENTINA
+    <year>1993-</year>
+    <sum_profit>351669.5324999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ARGENTINA
+    <year>1992-</year>
+    <sum_profit>312412.43069999997</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    BRAZIL
+    <year>1998-</year>
+    <sum_profit>265032.7654</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    BRAZIL
+    <year>1997-</year>
+    <sum_profit>275700.7887</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    BRAZIL
+    <year>1996-</year>
+    <sum_profit>490362.62669999996</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    BRAZIL
+    <year>1995-</year>
+    <sum_profit>349754.1082</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    BRAZIL
+    <year>1994-</year>
+    <sum_profit>348798.4066</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    BRAZIL
+    <year>1993-</year>
+    <sum_profit>457273.76929999987</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    BRAZIL
+    <year>1992-</year>
+    <sum_profit>280563.4508</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CANADA
+    <year>1998-</year>
+    <sum_profit>249632.90339999995</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CANADA
+    <year>1997-</year>
+    <sum_profit>486581.6822</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CANADA
+    <year>1996-</year>
+    <sum_profit>359393.5226</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CANADA
+    <year>1995-</year>
+    <sum_profit>243051.8308</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CANADA
+    <year>1994-</year>
+    <sum_profit>188897.43769999995</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CANADA
+    <year>1993-</year>
+    <sum_profit>546007.0343000002</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CANADA
+    <year>1992-</year>
+    <sum_profit>275013.265</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CHINA
+    <year>1998-</year>
+    <sum_profit>391223.3132000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CHINA
+    <year>1997-</year>
+    <sum_profit>585354.2015</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CHINA
+    <year>1996-</year>
+    <sum_profit>555841.012</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CHINA
+    <year>1995-</year>
+    <sum_profit>864856.4126000003</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CHINA
+    <year>1994-</year>
+    <sum_profit>669658.4850999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CHINA
+    <year>1993-</year>
+    <sum_profit>621317.0196999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    CHINA
+    <year>1992-</year>
+    <sum_profit>932500.7559000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    EGYPT
+    <year>1998-</year>
+    <sum_profit>367340.03760000004</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    EGYPT
+    <year>1997-</year>
+    <sum_profit>958524.1564999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    EGYPT
+    <year>1996-</year>
+    <sum_profit>417700.6911</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    EGYPT
+    <year>1995-</year>
+    <sum_profit>852185.4610999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    EGYPT
+    <year>1994-</year>
+    <sum_profit>442097.3675000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    EGYPT
+    <year>1993-</year>
+    <sum_profit>677948.0185</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    EGYPT
+    <year>1992-</year>
+    <sum_profit>666425.4212000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ETHIOPIA
+    <year>1998-</year>
+    <sum_profit>146634.89250000002</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ETHIOPIA
+    <year>1997-</year>
+    <sum_profit>264122.6167</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ETHIOPIA
+    <year>1996-</year>
+    <sum_profit>193275.0975</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ETHIOPIA
+    <year>1995-</year>
+    <sum_profit>220253.51309999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ETHIOPIA
+    <year>1994-</year>
+    <sum_profit>296634.25999999995</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ETHIOPIA
+    <year>1993-</year>
+    <sum_profit>304224.8128999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ETHIOPIA
+    <year>1992-</year>
+    <sum_profit>297588.3116</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    FRANCE
+    <year>1998-</year>
+    <sum_profit>72506.49999999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    FRANCE
+    <year>1997-</year>
+    <sum_profit>237462.124</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    FRANCE
+    <year>1996-</year>
+    <sum_profit>151017.7675</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    FRANCE
+    <year>1995-</year>
+    <sum_profit>296667.94529999996</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    FRANCE
+    <year>1994-</year>
+    <sum_profit>233805.74189999996</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    FRANCE
+    <year>1993-</year>
+    <sum_profit>168968.15499999997</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    FRANCE
+    <year>1992-</year>
+    <sum_profit>127349.17379999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    GERMANY
+    <year>1998-</year>
+    <sum_profit>223811.27589999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    GERMANY
+    <year>1997-</year>
+    <sum_profit>661263.7764</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    GERMANY
+    <year>1996-</year>
+    <sum_profit>482126.6721</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    GERMANY
+    <year>1995-</year>
+    <sum_profit>571466.4843</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    GERMANY
+    <year>1994-</year>
+    <sum_profit>322330.44039999996</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    GERMANY
+    <year>1993-</year>
+    <sum_profit>428314.7853</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    GERMANY
+    <year>1992-</year>
+    <sum_profit>273675.9499</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDIA
+    <year>1998-</year>
+    <sum_profit>418144.1956</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDIA
+    <year>1997-</year>
+    <sum_profit>859947.3428000002</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDIA
+    <year>1996-</year>
+    <sum_profit>515838.8397</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDIA
+    <year>1995-</year>
+    <sum_profit>631351.5802</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDIA
+    <year>1994-</year>
+    <sum_profit>798279.5615</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDIA
+    <year>1993-</year>
+    <sum_profit>767946.7017000002</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDIA
+    <year>1992-</year>
+    <sum_profit>797101.9729000002</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDONESIA
+    <year>1998-</year>
+    <sum_profit>386787.9168</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDONESIA
+    <year>1997-</year>
+    <sum_profit>311837.48389999993</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDONESIA
+    <year>1996-</year>
+    <sum_profit>421631.7918</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDONESIA
+    <year>1995-</year>
+    <sum_profit>479331.35769999993</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDONESIA
+    <year>1994-</year>
+    <sum_profit>602376.9040000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDONESIA
+    <year>1993-</year>
+    <sum_profit>496450.69419999997</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    INDONESIA
+    <year>1992-</year>
+    <sum_profit>561262.1780999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAN
+    <year>1998-</year>
+    <sum_profit>8996.554</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAN
+    <year>1997-</year>
+    <sum_profit>201653.8389</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAN
+    <year>1996-</year>
+    <sum_profit>281658.43820000003</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAN
+    <year>1995-</year>
+    <sum_profit>50873.1323</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAN
+    <year>1994-</year>
+    <sum_profit>53387.199199999995</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAN
+    <year>1993-</year>
+    <sum_profit>107749.96269999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAN
+    <year>1992-</year>
+    <sum_profit>67888.71759999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAQ
+    <year>1998-</year>
+    <sum_profit>113434.1032</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAQ
+    <year>1997-</year>
+    <sum_profit>86656.80619999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAQ
+    <year>1996-</year>
+    <sum_profit>359937.8761</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAQ
+    <year>1995-</year>
+    <sum_profit>218221.77560000002</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAQ
+    <year>1994-</year>
+    <sum_profit>360489.8843</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAQ
+    <year>1993-</year>
+    <sum_profit>559990.6546</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    IRAQ
+    <year>1992-</year>
+    <sum_profit>211655.93959999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JAPAN
+    <year>1998-</year>
+    <sum_profit>278531.80110000004</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JAPAN
+    <year>1997-</year>
+    <sum_profit>426945.7933</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JAPAN
+    <year>1996-</year>
+    <sum_profit>501942.5697999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JAPAN
+    <year>1995-</year>
+    <sum_profit>474025.84920000006</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JAPAN
+    <year>1994-</year>
+    <sum_profit>706404.4339000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JAPAN
+    <year>1993-</year>
+    <sum_profit>695412.9084</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JAPAN
+    <year>1992-</year>
+    <sum_profit>613125.5417000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JORDAN
+    <year>1998-</year>
+    <sum_profit>73080.73620000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JORDAN
+    <year>1997-</year>
+    <sum_profit>117104.29780000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JORDAN
+    <year>1996-</year>
+    <sum_profit>94740.7164</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JORDAN
+    <year>1995-</year>
+    <sum_profit>164684.45690000005</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JORDAN
+    <year>1994-</year>
+    <sum_profit>51403.20650000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JORDAN
+    <year>1993-</year>
+    <sum_profit>38718.7839</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    JORDAN
+    <year>1992-</year>
+    <sum_profit>132028.5385</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    KENYA
+    <year>1998-</year>
+    <sum_profit>351661.81839999993</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    KENYA
+    <year>1997-</year>
+    <sum_profit>542347.9571</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    KENYA
+    <year>1996-</year>
+    <sum_profit>466964.03970000014</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    KENYA
+    <year>1995-</year>
+    <sum_profit>795396.7551000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    KENYA
+    <year>1994-</year>
+    <sum_profit>740881.7387999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    KENYA
+    <year>1993-</year>
+    <sum_profit>603341.1860999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    KENYA
+    <year>1992-</year>
+    <sum_profit>774761.2392999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOROCCO
+    <year>1998-</year>
+    <sum_profit>118171.3902</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOROCCO
+    <year>1997-</year>
+    <sum_profit>96442.7008</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOROCCO
+    <year>1996-</year>
+    <sum_profit>118984.87849999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOROCCO
+    <year>1995-</year>
+    <sum_profit>158240.6598</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOROCCO
+    <year>1994-</year>
+    <sum_profit>148951.67939999996</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOROCCO
+    <year>1993-</year>
+    <sum_profit>48279.654800000004</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOROCCO
+    <year>1992-</year>
+    <sum_profit>146068.255</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOZAMBIQUE
+    <year>1998-</year>
+    <sum_profit>343227.8815999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOZAMBIQUE
+    <year>1997-</year>
+    <sum_profit>831834.1043999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOZAMBIQUE
+    <year>1996-</year>
+    <sum_profit>888199.0121</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOZAMBIQUE
+    <year>1995-</year>
+    <sum_profit>1.2492729387E6</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOZAMBIQUE
+    <year>1994-</year>
+    <sum_profit>594096.0637</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOZAMBIQUE
+    <year>1993-</year>
+    <sum_profit>1.2001850712999997E6</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    MOZAMBIQUE
+    <year>1992-</year>
+    <sum_profit>994120.0361999997</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    PERU
+    <year>1998-</year>
+    <sum_profit>352324.2789</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    PERU
+    <year>1997-</year>
+    <sum_profit>319502.2255</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    PERU
+    <year>1996-</year>
+    <sum_profit>391644.9686000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    PERU
+    <year>1995-</year>
+    <sum_profit>360028.07050000003</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    PERU
+    <year>1994-</year>
+    <sum_profit>460058.1291</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    PERU
+    <year>1993-</year>
+    <sum_profit>382460.08310000005</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    PERU
+    <year>1992-</year>
+    <sum_profit>312613.1714</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ROMANIA
+    <year>1998-</year>
+    <sum_profit>340984.62969999993</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ROMANIA
+    <year>1997-</year>
+    <sum_profit>444095.18840000004</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ROMANIA
+    <year>1996-</year>
+    <sum_profit>426472.5967000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ROMANIA
+    <year>1995-</year>
+    <sum_profit>616350.9394</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ROMANIA
+    <year>1994-</year>
+    <sum_profit>430563.19430000003</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ROMANIA
+    <year>1993-</year>
+    <sum_profit>769406.9533</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    ROMANIA
+    <year>1992-</year>
+    <sum_profit>543722.1295</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    RUSSIA
+    <year>1998-</year>
+    <sum_profit>217747.8262</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    RUSSIA
+    <year>1997-</year>
+    <sum_profit>644719.5017000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    RUSSIA
+    <year>1996-</year>
+    <sum_profit>501019.7684</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    RUSSIA
+    <year>1995-</year>
+    <sum_profit>717528.7446999998</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    RUSSIA
+    <year>1994-</year>
+    <sum_profit>441262.635</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    RUSSIA
+    <year>1993-</year>
+    <sum_profit>529422.5931999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    RUSSIA
+    <year>1992-</year>
+    <sum_profit>469683.7369</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    SAUDI ARABIA
+    <year>1998-</year>
+    <sum_profit>57980.23559999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    SAUDI ARABIA
+    <year>1997-</year>
+    <sum_profit>17173.121</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    SAUDI ARABIA
+    <year>1996-</year>
+    <sum_profit>14229.6253</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    SAUDI ARABIA
+    <year>1995-</year>
+    <sum_profit>98053.2309</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    SAUDI ARABIA
+    <year>1993-</year>
+    <sum_profit>42289.630999999994</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    SAUDI ARABIA
+    <year>1992-</year>
+    <sum_profit>50978.957200000004</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED KINGDOM
+    <year>1998-</year>
+    <sum_profit>127808.1215</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED KINGDOM
+    <year>1997-</year>
+    <sum_profit>407935.66060000006</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED KINGDOM
+    <year>1996-</year>
+    <sum_profit>499957.51989999996</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED KINGDOM
+    <year>1995-</year>
+    <sum_profit>480575.5026</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED KINGDOM
+    <year>1994-</year>
+    <sum_profit>513252.8116</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED KINGDOM
+    <year>1993-</year>
+    <sum_profit>697570.9412</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED KINGDOM
+    <year>1992-</year>
+    <sum_profit>361516.41159999993</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED STATES
+    <year>1998-</year>
+    <sum_profit>503864.69629999995</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED STATES
+    <year>1997-</year>
+    <sum_profit>649175.2847</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED STATES
+    <year>1996-</year>
+    <sum_profit>831723.1556999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED STATES
+    <year>1995-</year>
+    <sum_profit>902131.2862000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED STATES
+    <year>1994-</year>
+    <sum_profit>460768.5468</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED STATES
+    <year>1993-</year>
+    <sum_profit>656092.8661000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    UNITED STATES
+    <year>1992-</year>
+    <sum_profit>714228.6231000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    VIETNAM
+    <year>1998-</year>
+    <sum_profit>578857.041</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    VIETNAM
+    <year>1997-</year>
+    <sum_profit>596114.8584999999</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    VIETNAM
+    <year>1996-</year>
+    <sum_profit>832979.0530000001</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    VIETNAM
+    <year>1995-</year>
+    <sum_profit>757862.0438000002</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    VIETNAM
+    <year>1994-</year>
+    <sum_profit>1.0032755370999995E6</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    VIETNAM
+    <year>1993-</year>
+    <sum_profit>461389.00369999994</sum_profit>
+</product_type_profit_measure>
+<product_type_profit_measure>
+    VIETNAM
+    <year>1992-</year>
+    <sum_profit>820665.7063999999</sum_profit>
+</product_type_profit_measure>

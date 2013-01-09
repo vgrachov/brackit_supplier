@@ -1,0 +1,892 @@
+<important_stock>
+    968
+    <value>1.112571136E7</value>
+</important_stock>
+<important_stock>
+    902
+    <value>1.052055758E7</value>
+</important_stock>
+<important_stock>
+    328
+    <value>9.09209839E6</value>
+</important_stock>
+<important_stock>
+    796
+    <value>8.79450908E6</value>
+</important_stock>
+<important_stock>
+    538
+    <value>8.488445049999999E6</value>
+</important_stock>
+<important_stock>
+    697
+    <value>7.76012364E6</value>
+</important_stock>
+<important_stock>
+    124
+    <value>7.7472964799999995E6</value>
+</important_stock>
+<important_stock>
+    1702
+    <value>7.73575418E6</value>
+</important_stock>
+<important_stock>
+    1646
+    <value>7.654272E6</value>
+</important_stock>
+<important_stock>
+    1134
+    <value>7.481289699999999E6</value>
+</important_stock>
+<important_stock>
+    1100
+    <value>7.40000708E6</value>
+</important_stock>
+<important_stock>
+    706
+    <value>7.2849391899999995E6</value>
+</important_stock>
+<important_stock>
+    1035
+    <value>7.23431682E6</value>
+</important_stock>
+<important_stock>
+    95
+    <value>7.18522746E6</value>
+</important_stock>
+<important_stock>
+    77
+    <value>7.155531100000001E6</value>
+</important_stock>
+<important_stock>
+    192
+    <value>7.15251515E6</value>
+</important_stock>
+<important_stock>
+    1023
+    <value>7.10742067E6</value>
+</important_stock>
+<important_stock>
+    568
+    <value>6.82759168E6</value>
+</important_stock>
+<important_stock>
+    628
+    <value>6.666892899999999E6</value>
+</important_stock>
+<important_stock>
+    609
+    <value>6.657185819999999E6</value>
+</important_stock>
+<important_stock>
+    770
+    <value>6.63070284E6</value>
+</important_stock>
+<important_stock>
+    1620
+    <value>6.31228428E6</value>
+</important_stock>
+<important_stock>
+    247
+    <value>6.26843448E6</value>
+</important_stock>
+<important_stock>
+    1802
+    <value>6.261960149999999E6</value>
+</important_stock>
+<important_stock>
+    1938
+    <value>6.15651484E6</value>
+</important_stock>
+<important_stock>
+    702
+    <value>6.04394001E6</value>
+</important_stock>
+<important_stock>
+    1332
+    <value>6.02365104E6</value>
+</important_stock>
+<important_stock>
+    670
+    <value>5.8044249E6</value>
+</important_stock>
+<important_stock>
+    176
+    <value>5.688023390000001E6</value>
+</important_stock>
+<important_stock>
+    1166
+    <value>5.56854012E6</value>
+</important_stock>
+<important_stock>
+    243
+    <value>5.519633E6</value>
+</important_stock>
+<important_stock>
+    540
+    <value>5.50869442E6</value>
+</important_stock>
+<important_stock>
+    386
+    <value>5.4759291899999995E6</value>
+</important_stock>
+<important_stock>
+    1265
+    <value>5.4191403E6</value>
+</important_stock>
+<important_stock>
+    302
+    <value>5.41907968E6</value>
+</important_stock>
+<important_stock>
+    608
+    <value>5.40469496E6</value>
+</important_stock>
+<important_stock>
+    928
+    <value>5.37530625E6</value>
+</important_stock>
+<important_stock>
+    677
+    <value>5.35342032E6</value>
+</important_stock>
+<important_stock>
+    836
+    <value>5.32542E6</value>
+</important_stock>
+<important_stock>
+    1394
+    <value>5.258613359999999E6</value>
+</important_stock>
+<important_stock>
+    444
+    <value>5.203454130000001E6</value>
+</important_stock>
+<important_stock>
+    510
+    <value>5.1635493E6</value>
+</important_stock>
+<important_stock>
+    512
+    <value>5.163062399999999E6</value>
+</important_stock>
+<important_stock>
+    1228
+    <value>5.1502225E6</value>
+</important_stock>
+<important_stock>
+    412
+    <value>4.98767505E6</value>
+</important_stock>
+<important_stock>
+    1602
+    <value>4.93432884E6</value>
+</important_stock>
+<important_stock>
+    1670
+    <value>4.913904E6</value>
+</important_stock>
+<important_stock>
+    470
+    <value>4.90521222E6</value>
+</important_stock>
+<important_stock>
+    580
+    <value>4.85621745E6</value>
+</important_stock>
+<important_stock>
+    934
+    <value>4.79249597E6</value>
+</important_stock>
+<important_stock>
+    970
+    <value>4.7466742E6</value>
+</important_stock>
+<important_stock>
+    1356
+    <value>4.6775638E6</value>
+</important_stock>
+<important_stock>
+    1326
+    <value>4.596536430000001E6</value>
+</important_stock>
+<important_stock>
+    45
+    <value>4.56366258E6</value>
+</important_stock>
+<important_stock>
+    639
+    <value>4.52300643E6</value>
+</important_stock>
+<important_stock>
+    732
+    <value>4.4774868E6</value>
+</important_stock>
+<important_stock>
+    1661
+    <value>4.385769600000001E6</value>
+</important_stock>
+<important_stock>
+    170
+    <value>4.371681399999999E6</value>
+</important_stock>
+<important_stock>
+    528
+    <value>4.352621350000001E6</value>
+</important_stock>
+<important_stock>
+    960
+    <value>4.32616284E6</value>
+</important_stock>
+<important_stock>
+    1841
+    <value>4.29561513E6</value>
+</important_stock>
+<important_stock>
+    102
+    <value>4.25339327E6</value>
+</important_stock>
+<important_stock>
+    344
+    <value>4.07221452E6</value>
+</important_stock>
+<important_stock>
+    1093
+    <value>4.0540846500000004E6</value>
+</important_stock>
+<important_stock>
+    1198
+    <value>3.95128032E6</value>
+</important_stock>
+<important_stock>
+    1492
+    <value>3.90937092E6</value>
+</important_stock>
+<important_stock>
+    1450
+    <value>3.90483468E6</value>
+</important_stock>
+<important_stock>
+    738
+    <value>3.9029035E6</value>
+</important_stock>
+<important_stock>
+    1786
+    <value>3.89299132E6</value>
+</important_stock>
+<important_stock>
+    1128
+    <value>3.873024E6</value>
+</important_stock>
+<important_stock>
+    289
+    <value>3.86917118E6</value>
+</important_stock>
+<important_stock>
+    1873
+    <value>3.84598659E6</value>
+</important_stock>
+<important_stock>
+    1687
+    <value>3.81448456E6</value>
+</important_stock>
+<important_stock>
+    1885
+    <value>3.74278849E6</value>
+</important_stock>
+<important_stock>
+    994
+    <value>3.7134017600000002E6</value>
+</important_stock>
+<important_stock>
+    1032
+    <value>3.6818541E6</value>
+</important_stock>
+<important_stock>
+    483
+    <value>3.6697728E6</value>
+</important_stock>
+<important_stock>
+    671
+    <value>3.6573804399999995E6</value>
+</important_stock>
+<important_stock>
+    635
+    <value>3.61706334E6</value>
+</important_stock>
+<important_stock>
+    804
+    <value>3.59135296E6</value>
+</important_stock>
+<important_stock>
+    1744
+    <value>3.58499018E6</value>
+</important_stock>
+<important_stock>
+    1390
+    <value>3.5680601E6</value>
+</important_stock>
+<important_stock>
+    570
+    <value>3.5391402800000003E6</value>
+</important_stock>
+<important_stock>
+    862
+    <value>3.50267649E6</value>
+</important_stock>
+<important_stock>
+    1688
+    <value>3.4589276399999997E6</value>
+</important_stock>
+<important_stock>
+    2
+    <value>3.3666685500000003E6</value>
+</important_stock>
+<important_stock>
+    499
+    <value>3.3262091199999996E6</value>
+</important_stock>
+<important_stock>
+    1489
+    <value>3.3176208000000003E6</value>
+</important_stock>
+<important_stock>
+    1259
+    <value>3.27755104E6</value>
+</important_stock>
+<important_stock>
+    20
+    <value>3.2280273E6</value>
+</important_stock>
+<important_stock>
+    1120
+    <value>3.1632369E6</value>
+</important_stock>
+<important_stock>
+    1070
+    <value>3.03640398E6</value>
+</important_stock>
+<important_stock>
+    128
+    <value>2.9693747800000003E6</value>
+</important_stock>
+<important_stock>
+    1302
+    <value>2.8807324E6</value>
+</important_stock>
+<important_stock>
+    803
+    <value>2.83838816E6</value>
+</important_stock>
+<important_stock>
+    1629
+    <value>2.7427808E6</value>
+</important_stock>
+<important_stock>
+    1902
+    <value>2.7373219499999997E6</value>
+</important_stock>
+<important_stock>
+    1996
+    <value>2.7324304E6</value>
+</important_stock>
+<important_stock>
+    428
+    <value>2.7103161E6</value>
+</important_stock>
+<important_stock>
+    870
+    <value>2.68288784E6</value>
+</important_stock>
+<important_stock>
+    1958
+    <value>2.67337304E6</value>
+</important_stock>
+<important_stock>
+    1982
+    <value>2.63857825E6</value>
+</important_stock>
+<important_stock>
+    1914
+    <value>2.61638594E6</value>
+</important_stock>
+<important_stock>
+    52
+    <value>2.56691652E6</value>
+</important_stock>
+<important_stock>
+    1470
+    <value>2.5407904E6</value>
+</important_stock>
+<important_stock>
+    542
+    <value>2.45012999E6</value>
+</important_stock>
+<important_stock>
+    1588
+    <value>2.3842411999999997E6</value>
+</important_stock>
+<important_stock>
+    1970
+    <value>2.33136625E6</value>
+</important_stock>
+<important_stock>
+    346
+    <value>2.3183157600000002E6</value>
+</important_stock>
+<important_stock>
+    1065
+    <value>2.21812033E6</value>
+</important_stock>
+<important_stock>
+    118
+    <value>2.2112056199999996E6</value>
+</important_stock>
+<important_stock>
+    1522
+    <value>2.12853696E6</value>
+</important_stock>
+<important_stock>
+    1776
+    <value>2.10997593E6</value>
+</important_stock>
+<important_stock>
+    1002
+    <value>2.10910288E6</value>
+</important_stock>
+<important_stock>
+    1102
+    <value>2.08444392E6</value>
+</important_stock>
+<important_stock>
+    1728
+    <value>2.0485834E6</value>
+</important_stock>
+<important_stock>
+    3
+    <value>2.03884609E6</value>
+</important_stock>
+<important_stock>
+    1202
+    <value>2.0380053599999999E6</value>
+</important_stock>
+<important_stock>
+    1828
+    <value>2.00870644E6</value>
+</important_stock>
+<important_stock>
+    1590
+    <value>2.00612272E6</value>
+</important_stock>
+<important_stock>
+    202
+    <value>1.93547568E6</value>
+</important_stock>
+<important_stock>
+    1130
+    <value>1.9340945E6</value>
+</important_stock>
+<important_stock>
+    1370
+    <value>1.88296875E6</value>
+</important_stock>
+<important_stock>
+    1314
+    <value>1.8566415E6</value>
+</important_stock>
+<important_stock>
+    1582
+    <value>1.8443201400000001E6</value>
+</important_stock>
+<important_stock>
+    1028
+    <value>1.79915808E6</value>
+</important_stock>
+<important_stock>
+    1550
+    <value>1.70678208E6</value>
+</important_stock>
+<important_stock>
+    441
+    <value>1.70606394E6</value>
+</important_stock>
+<important_stock>
+    829
+    <value>1.680168E6</value>
+</important_stock>
+<important_stock>
+    1424
+    <value>1.58637868E6</value>
+</important_stock>
+<important_stock>
+    869
+    <value>1.58264316E6</value>
+</important_stock>
+<important_stock>
+    70
+    <value>1.57975272E6</value>
+</important_stock>
+<important_stock>
+    1270
+    <value>1.57731405E6</value>
+</important_stock>
+<important_stock>
+    1328
+    <value>1.57619025E6</value>
+</important_stock>
+<important_stock>
+    53
+    <value>1.55784707E6</value>
+</important_stock>
+<important_stock>
+    572
+    <value>1.53384424E6</value>
+</important_stock>
+<important_stock>
+    1097
+    <value>1.5124056800000002E6</value>
+</important_stock>
+<important_stock>
+    1508
+    <value>1.50540292E6</value>
+</important_stock>
+<important_stock>
+    1928
+    <value>1.50044748E6</value>
+</important_stock>
+<important_stock>
+    27
+    <value>1.4930966300000001E6</value>
+</important_stock>
+<important_stock>
+    728
+    <value>1.4535015E6</value>
+</important_stock>
+<important_stock>
+    1402
+    <value>1.4480131199999999E6</value>
+</important_stock>
+<important_stock>
+    828
+    <value>1.3875158499999999E6</value>
+</important_stock>
+<important_stock>
+    1940
+    <value>1.36963305E6</value>
+</important_stock>
+<important_stock>
+    28
+    <value>1.36088498E6</value>
+</important_stock>
+<important_stock>
+    342
+    <value>1.35713649E6</value>
+</important_stock>
+<important_stock>
+    1217
+    <value>1.3058965499999998E6</value>
+</important_stock>
+<important_stock>
+    372
+    <value>1.2817134E6</value>
+</important_stock>
+<important_stock>
+    400
+    <value>1.25203914E6</value>
+</important_stock>
+<important_stock>
+    1570
+    <value>1.18843042E6</value>
+</important_stock>
+<important_stock>
+    936
+    <value>1.12046648E6</value>
+</important_stock>
+<important_stock>
+    1296
+    <value>1.112266E6</value>
+</important_stock>
+<important_stock>
+    1067
+    <value>1.06127796E6</value>
+</important_stock>
+<important_stock>
+    1884
+    <value>1.0192215E6</value>
+</important_stock>
+<important_stock>
+    1562
+    <value>1.00683952E6</value>
+</important_stock>
+<important_stock>
+    1431
+    <value>985178.72</value>
+</important_stock>
+<important_stock>
+    602
+    <value>984894.4</value>
+</important_stock>
+<important_stock>
+    270
+    <value>976214.4</value>
+</important_stock>
+<important_stock>
+    248
+    <value>941691.9099999999</value>
+</important_stock>
+<important_stock>
+    1926
+    <value>933592</value>
+</important_stock>
+<important_stock>
+    1984
+    <value>931040.04</value>
+</important_stock>
+<important_stock>
+    871
+    <value>891797.92</value>
+</important_stock>
+<important_stock>
+    1364
+    <value>846148.93</value>
+</important_stock>
+<important_stock>
+    502
+    <value>790795.65</value>
+</important_stock>
+<important_stock>
+    78
+    <value>782246.34</value>
+</important_stock>
+<important_stock>
+    1859
+    <value>761519.3</value>
+</important_stock>
+<important_stock>
+    1194
+    <value>747814.62</value>
+</important_stock>
+<important_stock>
+    374
+    <value>729413.96</value>
+</important_stock>
+<important_stock>
+    228
+    <value>716446.65</value>
+</important_stock>
+<important_stock>
+    802
+    <value>711373.6499999999</value>
+</important_stock>
+<important_stock>
+    201
+    <value>707538.22</value>
+</important_stock>
+<important_stock>
+    1760
+    <value>707001.66</value>
+</important_stock>
+<important_stock>
+    1170
+    <value>698377.9199999999</value>
+</important_stock>
+<important_stock>
+    275
+    <value>673271.2</value>
+</important_stock>
+<important_stock>
+    1605
+    <value>670732.64</value>
+</important_stock>
+<important_stock>
+    274
+    <value>666523.92</value>
+</important_stock>
+<important_stock>
+    1528
+    <value>663748.96</value>
+</important_stock>
+<important_stock>
+    1899
+    <value>660875.04</value>
+</important_stock>
+<important_stock>
+    1463
+    <value>660742.1799999999</value>
+</important_stock>
+<important_stock>
+    150
+    <value>643765.72</value>
+</important_stock>
+<important_stock>
+    1647
+    <value>636214.5</value>
+</important_stock>
+<important_stock>
+    1827
+    <value>600217.5</value>
+</important_stock>
+<important_stock>
+    1870
+    <value>580023.68</value>
+</important_stock>
+<important_stock>
+    926
+    <value>538364.1599999999</value>
+</important_stock>
+<important_stock>
+    895
+    <value>518427.45</value>
+</important_stock>
+<important_stock>
+    1718
+    <value>478540.01999999996</value>
+</important_stock>
+<important_stock>
+    1485
+    <value>462898.80000000005</value>
+</important_stock>
+<important_stock>
+    1192
+    <value>456582.92</value>
+</important_stock>
+<important_stock>
+    1453
+    <value>448047.6</value>
+</important_stock>
+<important_stock>
+    1679
+    <value>429797.44</value>
+</important_stock>
+<important_stock>
+    318
+    <value>425646.16000000003</value>
+</important_stock>
+<important_stock>
+    144
+    <value>419880.24</value>
+</important_stock>
+<important_stock>
+    1502
+    <value>392321.5</value>
+</important_stock>
+<important_stock>
+    1000
+    <value>384893.60000000003</value>
+</important_stock>
+<important_stock>
+    1058
+    <value>375756.36</value>
+</important_stock>
+<important_stock>
+    837
+    <value>370738.4</value>
+</important_stock>
+<important_stock>
+    370
+    <value>370633.34</value>
+</important_stock>
+<important_stock>
+    1254
+    <value>361655.35</value>
+</important_stock>
+<important_stock>
+    1548
+    <value>335240.96</value>
+</important_stock>
+<important_stock>
+    1233
+    <value>295900.70999999996</value>
+</important_stock>
+<important_stock>
+    1411
+    <value>286453.44</value>
+</important_stock>
+<important_stock>
+    1842
+    <value>254105.16</value>
+</important_stock>
+<important_stock>
+    764
+    <value>253461.63999999998</value>
+</important_stock>
+<important_stock>
+    1816
+    <value>244463.12999999998</value>
+</important_stock>
+<important_stock>
+    774
+    <value>241515.54</value>
+</important_stock>
+<important_stock>
+    1628
+    <value>239833.44</value>
+</important_stock>
+<important_stock>
+    1770
+    <value>235674.32</value>
+</important_stock>
+<important_stock>
+    221
+    <value>229914.30000000002</value>
+</important_stock>
+<important_stock>
+    1156
+    <value>224692</value>
+</important_stock>
+<important_stock>
+    1530
+    <value>216339.11000000002</value>
+</important_stock>
+<important_stock>
+    1428
+    <value>208043.16</value>
+</important_stock>
+<important_stock>
+    473
+    <value>192271.6</value>
+</important_stock>
+<important_stock>
+    1291
+    <value>177863.42</value>
+</important_stock>
+<important_stock>
+    216
+    <value>157498.9</value>
+</important_stock>
+<important_stock>
+    1388
+    <value>155382.08</value>
+</important_stock>
+<important_stock>
+    1162
+    <value>142511</value>
+</important_stock>
+<important_stock>
+    415
+    <value>129160.24</value>
+</important_stock>
+<important_stock>
+    1352
+    <value>124229.58</value>
+</important_stock>
+<important_stock>
+    666
+    <value>96360</value>
+</important_stock>
+<important_stock>
+    640
+    <value>94399.64</value>
+</important_stock>
+<important_stock>
+    598
+    <value>93652.65000000001</value>
+</important_stock>
+<important_stock>
+    314
+    <value>48762.299999999996</value>
+</important_stock>
+<important_stock>
+    402
+    <value>43366.05</value>
+</important_stock>

@@ -1,0 +1,44 @@
+<lineitem>
+    AF
+    <sum_qty>37474</sum_qty>
+    <sum_base_price>3.755083560000002E7</sum_base_price>
+    <sum_disc_charge>3.5658336582000025E7</sum_disc_charge>
+    <sum_charge>3.7082859122096054E7</sum_charge>
+    <avg_qty>25.354533152909337</avg_qty>
+    <avg_price>25406.519350473623</avg_price>
+    <avg_disc>0.05086603518267944</avg_disc>
+    <count_order>1</count_order>
+</lineitem>
+<lineitem>
+    NF
+    <sum_qty>1041</sum_qty>
+    <sum_base_price>1.0407715E6</sum_base_price>
+    <sum_disc_charge>998551.2055999999</sum_disc_charge>
+    <sum_charge>1.0359240219640002E6</sum_charge>
+    <avg_qty>27.394736842105264</avg_qty>
+    <avg_price>27388.723684210527</avg_price>
+    <avg_disc>0.04289473684210528</avg_disc>
+    <count_order>1</count_order>
+</lineitem>
+<lineitem>
+    NO
+    <sum_qty>77372</sum_qty>
+    <sum_base_price>7.755310666000019E7</sum_base_price>
+    <sum_disc_charge>7.37205001357999E7</sum_disc_charge>
+    <sum_charge>7.666295199178098E7</sum_charge>
+    <avg_qty>25.518469656992085</avg_qty>
+    <avg_price>25578.201405013257</avg_price>
+    <avg_disc>0.04971635883905021</avg_disc>
+    <count_order>1</count_order>
+</lineitem>
+<lineitem>
+    RF
+    <sum_qty>36470</sum_qty>
+    <sum_base_price>3.650730911000003E7</sum_base_price>
+    <sum_disc_charge>3.467945382439998E7</sum_disc_charge>
+    <sum_charge>3.6108058685507E7</sum_charge>
+    <avg_qty>25.048076923076923</avg_qty>
+    <avg_price>25073.701311813205</avg_price>
+    <avg_disc>0.05000686813186832</avg_disc>
+    <count_order>1</count_order>
+</lineitem>

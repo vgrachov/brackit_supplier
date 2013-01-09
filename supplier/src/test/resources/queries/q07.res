@@ -1,0 +1,12 @@
+<shipping_volume>
+    <supp_nation>ARGENTINA</supp_nation>
+    <cust_nation>INDIA</cust_nation>
+    <l_year>1995-</l_year>
+    <revenue>94740.85259999998</revenue>
+</shipping_volume>
+<shipping_volume>
+    <supp_nation>ARGENTINA</supp_nation>
+    <cust_nation>INDIA</cust_nation>
+    <l_year>1996-</l_year>
+    <revenue>87699.39660000001</revenue>
+</shipping_volume>

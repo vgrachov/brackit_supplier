@@ -1,0 +1,690 @@
+<shipping-priority>
+    47714
+    <revenue>267010.5894</revenue>
+    1995-03-110
+</shipping-priority>
+<shipping-priority>
+    22276
+    <revenue>266351.5562</revenue>
+    1995-01-290
+</shipping-priority>
+<shipping-priority>
+    32965
+    <revenue>263768.34140000003</revenue>
+    1995-02-250
+</shipping-priority>
+<shipping-priority>
+    21956
+    <revenue>254541.1285</revenue>
+    1995-02-020
+</shipping-priority>
+<shipping-priority>
+    1637
+    <revenue>243512.7981</revenue>
+    1995-02-080
+</shipping-priority>
+<shipping-priority>
+    10916
+    <revenue>241320.08140000002</revenue>
+    1995-03-110
+</shipping-priority>
+<shipping-priority>
+    30497
+    <revenue>208566.69689999998</revenue>
+    1995-02-070
+</shipping-priority>
+<shipping-priority>
+    450
+    <revenue>205447.42320000002</revenue>
+    1995-03-050
+</shipping-priority>
+<shipping-priority>
+    47204
+    <revenue>204478.5213</revenue>
+    1995-03-130
+</shipping-priority>
+<shipping-priority>
+    9696
+    <revenue>201502.21879999997</revenue>
+    1995-02-200
+</shipping-priority>
+<shipping-priority>
+    59843
+    <revenue>195185.6655</revenue>
+    1995-02-140
+</shipping-priority>
+<shipping-priority>
+    20641
+    <revenue>189169.8966</revenue>
+    1995-02-200
+</shipping-priority>
+<shipping-priority>
+    40612
+    <revenue>177040.8647</revenue>
+    1995-03-010
+</shipping-priority>
+<shipping-priority>
+    27719
+    <revenue>173895.1907</revenue>
+    1995-02-140
+</shipping-priority>
+<shipping-priority>
+    20453
+    <revenue>169158.0061</revenue>
+    1995-03-110
+</shipping-priority>
+<shipping-priority>
+    30725
+    <revenue>167017.7105</revenue>
+    1994-12-290
+</shipping-priority>
+<shipping-priority>
+    6022
+    <revenue>166150.01269999996</revenue>
+    1995-02-130
+</shipping-priority>
+<shipping-priority>
+    44102
+    <revenue>164655.8193</revenue>
+    1995-01-140
+</shipping-priority>
+<shipping-priority>
+    40962
+    <revenue>163686.0684</revenue>
+    1995-02-210
+</shipping-priority>
+<shipping-priority>
+    25669
+    <revenue>161663.4805</revenue>
+    1995-01-170
+</shipping-priority>
+<shipping-priority>
+    33764
+    <revenue>160334.361</revenue>
+    1995-02-110
+</shipping-priority>
+<shipping-priority>
+    7840
+    <revenue>159275.41259999998</revenue>
+    1995-01-090
+</shipping-priority>
+<shipping-priority>
+    31747
+    <revenue>158233.299</revenue>
+    1995-02-030
+</shipping-priority>
+<shipping-priority>
+    19365
+    <revenue>156543.6891</revenue>
+    1995-01-170
+</shipping-priority>
+<shipping-priority>
+    42081
+    <revenue>155730.3201</revenue>
+    1995-01-110
+</shipping-priority>
+<shipping-priority>
+    35266
+    <revenue>153107.19239999997</revenue>
+    1995-01-110
+</shipping-priority>
+<shipping-priority>
+    44612
+    <revenue>152829.9593</revenue>
+    1995-03-140
+</shipping-priority>
+<shipping-priority>
+    26848
+    <revenue>149818.9645</revenue>
+    1995-03-100
+</shipping-priority>
+<shipping-priority>
+    5347
+    <revenue>149753.7212</revenue>
+    1995-02-220
+</shipping-priority>
+<shipping-priority>
+    22433
+    <revenue>149730.976</revenue>
+    1995-03-040
+</shipping-priority>
+<shipping-priority>
+    51777
+    <revenue>146508.12</revenue>
+    1995-02-200
+</shipping-priority>
+<shipping-priority>
+    25188
+    <revenue>144523.4766</revenue>
+    1995-01-040
+</shipping-priority>
+<shipping-priority>
+    25603
+    <revenue>142844.3432</revenue>
+    1995-03-060
+</shipping-priority>
+<shipping-priority>
+    43491
+    <revenue>140776.6823</revenue>
+    1995-03-090
+</shipping-priority>
+<shipping-priority>
+    28741
+    <revenue>134921.0282</revenue>
+    1995-03-010
+</shipping-priority>
+<shipping-priority>
+    29953
+    <revenue>133379.8908</revenue>
+    1995-02-080
+</shipping-priority>
+<shipping-priority>
+    30981
+    <revenue>125248.7562</revenue>
+    1995-02-160
+</shipping-priority>
+<shipping-priority>
+    24640
+    <revenue>123648.556</revenue>
+    1995-01-300
+</shipping-priority>
+<shipping-priority>
+    4227
+    <revenue>120474.4607</revenue>
+    1995-02-240
+</shipping-priority>
+<shipping-priority>
+    27554
+    <revenue>119576.7959</revenue>
+    1995-03-110
+</shipping-priority>
+<shipping-priority>
+    21475
+    <revenue>119199.7444</revenue>
+    1995-02-210
+</shipping-priority>
+<shipping-priority>
+    33794
+    <revenue>116897.00579999998</revenue>
+    1995-02-230
+</shipping-priority>
+<shipping-priority>
+    59874
+    <revenue>116489.9056</revenue>
+    1995-01-060
+</shipping-priority>
+<shipping-priority>
+    56295
+    <revenue>115110.75839999999</revenue>
+    1995-02-240
+</shipping-priority>
+<shipping-priority>
+    386
+    <revenue>114355.8002</revenue>
+    1995-01-250
+</shipping-priority>
+<shipping-priority>
+    20805
+    <revenue>112003.3584</revenue>
+    1995-01-110
+</shipping-priority>
+<shipping-priority>
+    15106
+    <revenue>111825.3087</revenue>
+    1995-01-280
+</shipping-priority>
+<shipping-priority>
+    40001
+    <revenue>109384.08660000001</revenue>
+    1995-02-250
+</shipping-priority>
+<shipping-priority>
+    15462
+    <revenue>106314.943</revenue>
+    1995-02-270
+</shipping-priority>
+<shipping-priority>
+    26723
+    <revenue>102317.1376</revenue>
+    1995-03-040
+</shipping-priority>
+<shipping-priority>
+    34727
+    <revenue>99510.6924</revenue>
+    1995-03-140
+</shipping-priority>
+<shipping-priority>
+    5765
+    <revenue>97694.8959</revenue>
+    1994-12-150
+</shipping-priority>
+<shipping-priority>
+    25858
+    <revenue>97481.0997</revenue>
+    1995-01-310
+</shipping-priority>
+<shipping-priority>
+    32128
+    <revenue>96799.6636</revenue>
+    1995-01-220
+</shipping-priority>
+<shipping-priority>
+    45349
+    <revenue>94730.51759999999</revenue>
+    1995-02-120
+</shipping-priority>
+<shipping-priority>
+    46528
+    <revenue>93485.659</revenue>
+    1994-12-070
+</shipping-priority>
+<shipping-priority>
+    16322
+    <revenue>92848.15920000001</revenue>
+    1994-12-200
+</shipping-priority>
+<shipping-priority>
+    45991
+    <revenue>90739.8036</revenue>
+    1995-02-150
+</shipping-priority>
+<shipping-priority>
+    28642
+    <revenue>87419.6232</revenue>
+    1995-01-190
+</shipping-priority>
+<shipping-priority>
+    19780
+    <revenue>87235.3936</revenue>
+    1995-02-050
+</shipping-priority>
+<shipping-priority>
+    10691
+    <revenue>84419.802</revenue>
+    1995-03-140
+</shipping-priority>
+<shipping-priority>
+    5636
+    <revenue>84345.57299999999</revenue>
+    1995-02-160
+</shipping-priority>
+<shipping-priority>
+    52640
+    <revenue>81063.9358</revenue>
+    1995-01-020
+</shipping-priority>
+<shipping-priority>
+    47781
+    <revenue>79949.32560000001</revenue>
+    1995-01-290
+</shipping-priority>
+<shipping-priority>
+    32901
+    <revenue>79789.8468</revenue>
+    1995-01-110
+</shipping-priority>
+<shipping-priority>
+    45959
+    <revenue>78599.0592</revenue>
+    1994-12-070
+</shipping-priority>
+<shipping-priority>
+    12961
+    <revenue>78376.205</revenue>
+    1994-12-130
+</shipping-priority>
+<shipping-priority>
+    5312
+    <revenue>76343.59049999999</revenue>
+    1995-02-240
+</shipping-priority>
+<shipping-priority>
+    47876
+    <revenue>75050.7096</revenue>
+    1994-12-260
+</shipping-priority>
+<shipping-priority>
+    29958
+    <revenue>74209.73000000001</revenue>
+    1995-01-070
+</shipping-priority>
+<shipping-priority>
+    54787
+    <revenue>73044.1068</revenue>
+    1995-02-250
+</shipping-priority>
+<shipping-priority>
+    46341
+    <revenue>72519.55709999999</revenue>
+    1994-12-180
+</shipping-priority>
+<shipping-priority>
+    9248
+    <revenue>70712.3614</revenue>
+    1994-12-240
+</shipping-priority>
+<shipping-priority>
+    4707
+    <revenue>70091.3738</revenue>
+    1995-02-270
+</shipping-priority>
+<shipping-priority>
+    59139
+    <revenue>67005.4768</revenue>
+    1995-01-300
+</shipping-priority>
+<shipping-priority>
+    46980
+    <revenue>66360.1984</revenue>
+    1995-01-180
+</shipping-priority>
+<shipping-priority>
+    52199
+    <revenue>65976.1078</revenue>
+    1995-01-270
+</shipping-priority>
+<shipping-priority>
+    2883
+    <revenue>61835.551199999994</revenue>
+    1995-01-230
+</shipping-priority>
+<shipping-priority>
+    57378
+    <revenue>61575.588</revenue>
+    1994-12-290
+</shipping-priority>
+<shipping-priority>
+    21760
+    <revenue>61308.487499999996</revenue>
+    1995-01-310
+</shipping-priority>
+<shipping-priority>
+    46562
+    <revenue>56968.6599</revenue>
+    1995-02-130
+</shipping-priority>
+<shipping-priority>
+    5728
+    <revenue>56604.03999999999</revenue>
+    1994-12-110
+</shipping-priority>
+<shipping-priority>
+    58981
+    <revenue>55946.60399999999</revenue>
+    1995-02-010
+</shipping-priority>
+<shipping-priority>
+    32484
+    <revenue>55427.355800000005</revenue>
+    1995-02-050
+</shipping-priority>
+<shipping-priority>
+    25027
+    <revenue>54115.5747</revenue>
+    1994-12-170
+</shipping-priority>
+<shipping-priority>
+    57987
+    <revenue>53735.4972</revenue>
+    1994-12-160
+</shipping-priority>
+<shipping-priority>
+    36999
+    <revenue>52966.367999999995</revenue>
+    1994-12-130
+</shipping-priority>
+<shipping-priority>
+    17058
+    <revenue>50390.4629</revenue>
+    1995-01-020
+</shipping-priority>
+<shipping-priority>
+    46402
+    <revenue>48532.7175</revenue>
+    1995-01-090
+</shipping-priority>
+<shipping-priority>
+    45829
+    <revenue>48328.245</revenue>
+    1995-03-130
+</shipping-priority>
+<shipping-priority>
+    15111
+    <revenue>47951.075899999996</revenue>
+    1994-12-180
+</shipping-priority>
+<shipping-priority>
+    577
+    <revenue>46995.5294</revenue>
+    1994-12-190
+</shipping-priority>
+<shipping-priority>
+    21061
+    <revenue>46024.6182</revenue>
+    1994-12-220
+</shipping-priority>
+<shipping-priority>
+    55906
+    <revenue>46001.888</revenue>
+    1994-11-270
+</shipping-priority>
+<shipping-priority>
+    6592
+    <revenue>45865.324799999995</revenue>
+    1994-12-020
+</shipping-priority>
+<shipping-priority>
+    52482
+    <revenue>42049.6872</revenue>
+    1995-02-010
+</shipping-priority>
+<shipping-priority>
+    28993
+    <revenue>41619.32719999999</revenue>
+    1995-03-100
+</shipping-priority>
+<shipping-priority>
+    36069
+    <revenue>41060.382</revenue>
+    1994-12-060
+</shipping-priority>
+<shipping-priority>
+    40326
+    <revenue>40802.386</revenue>
+    1994-12-270
+</shipping-priority>
+<shipping-priority>
+    34724
+    <revenue>40788.88</revenue>
+    1994-12-280
+</shipping-priority>
+<shipping-priority>
+    31140
+    <revenue>40285.035</revenue>
+    1995-02-020
+</shipping-priority>
+<shipping-priority>
+    35399
+    <revenue>39727.4948</revenue>
+    1995-01-220
+</shipping-priority>
+<shipping-priority>
+    58880
+    <revenue>39161.1832</revenue>
+    1995-01-080
+</shipping-priority>
+<shipping-priority>
+    56711
+    <revenue>38817.547399999996</revenue>
+    1995-02-070
+</shipping-priority>
+<shipping-priority>
+    19393
+    <revenue>38193.799999999996</revenue>
+    1995-01-150
+</shipping-priority>
+<shipping-priority>
+    29830
+    <revenue>38191.770000000004</revenue>
+    1995-01-130
+</shipping-priority>
+<shipping-priority>
+    26432
+    <revenue>35020.3198</revenue>
+    1994-12-310
+</shipping-priority>
+<shipping-priority>
+    55875
+    <revenue>34932.237199999996</revenue>
+    1994-11-260
+</shipping-priority>
+<shipping-priority>
+    15138
+    <revenue>33617.088</revenue>
+    1995-02-210
+</shipping-priority>
+<shipping-priority>
+    41895
+    <revenue>33392.31</revenue>
+    1995-01-110
+</shipping-priority>
+<shipping-priority>
+    49537
+    <revenue>31834.8</revenue>
+    1995-03-070
+</shipping-priority>
+<shipping-priority>
+    38947
+    <revenue>31071.699999999997</revenue>
+    1994-11-300
+</shipping-priority>
+<shipping-priority>
+    27361
+    <revenue>30722.735999999994</revenue>
+    1995-01-230
+</shipping-priority>
+<shipping-priority>
+    5188
+    <revenue>30300.818399999996</revenue>
+    1995-03-020
+</shipping-priority>
+<shipping-priority>
+    38784
+    <revenue>28136.315</revenue>
+    1995-02-040
+</shipping-priority>
+<shipping-priority>
+    56608
+    <revenue>27573.523199999996</revenue>
+    1994-11-190
+</shipping-priority>
+<shipping-priority>
+    6403
+    <revenue>27428.8287</revenue>
+    1995-02-120
+</shipping-priority>
+<shipping-priority>
+    25926
+    <revenue>26005.0986</revenue>
+    1994-11-210
+</shipping-priority>
+<shipping-priority>
+    35845
+    <revenue>25511.5375</revenue>
+    1995-01-070
+</shipping-priority>
+<shipping-priority>
+    37888
+    <revenue>24056.2168</revenue>
+    1994-12-230
+</shipping-priority>
+<shipping-priority>
+    30182
+    <revenue>22516.0064</revenue>
+    1995-01-090
+</shipping-priority>
+<shipping-priority>
+    12706
+    <revenue>21677.2864</revenue>
+    1994-11-210
+</shipping-priority>
+<shipping-priority>
+    50945
+    <revenue>21476.837199999998</revenue>
+    1995-01-080
+</shipping-priority>
+<shipping-priority>
+    5031
+    <revenue>20587.35</revenue>
+    1994-12-020
+</shipping-priority>
+<shipping-priority>
+    53634
+    <revenue>19348.115200000004</revenue>
+    1995-02-220
+</shipping-priority>
+<shipping-priority>
+    47076
+    <revenue>17918.1024</revenue>
+    1995-01-080
+</shipping-priority>
+<shipping-priority>
+    50693
+    <revenue>17651.38</revenue>
+    1995-01-170
+</shipping-priority>
+<shipping-priority>
+    35264
+    <revenue>17482.4496</revenue>
+    1995-03-140
+</shipping-priority>
+<shipping-priority>
+    38882
+    <revenue>16591.1616</revenue>
+    1994-12-150
+</shipping-priority>
+<shipping-priority>
+    59297
+    <revenue>15527.6198</revenue>
+    1994-12-100
+</shipping-priority>
+<shipping-priority>
+    59686
+    <revenue>13575.16</revenue>
+    1995-03-090
+</shipping-priority>
+<shipping-priority>
+    7527
+    <revenue>13068.3072</revenue>
+    1994-12-120
+</shipping-priority>
+<shipping-priority>
+    40835
+    <revenue>8190.6336</revenue>
+    1994-11-250
+</shipping-priority>
+<shipping-priority>
+    11073
+    <revenue>7289.619</revenue>
+    1994-12-020
+</shipping-priority>
+<shipping-priority>
+    5985
+    <revenue>6894.691999999999</revenue>
+    1995-01-120
+</shipping-priority>
+<shipping-priority>
+    28195
+    <revenue>4723.1628</revenue>
+    1994-12-210
+</shipping-priority>
+<shipping-priority>
+    3844
+    <revenue>4144.59</revenue>
+    1994-12-290
+</shipping-priority>
+<shipping-priority>
+    13924
+    <revenue>3587.162</revenue>
+    1994-12-200
+</shipping-priority>

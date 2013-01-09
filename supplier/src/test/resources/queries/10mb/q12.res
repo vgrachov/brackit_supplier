@@ -1,0 +1,10 @@
+<ships_mode_order_priority>
+    <l_shipmode>MAIL</l_shipmode>
+    <high_line_count>114</high_line_count>
+    <low_line_count>271</low_line_count>
+</ships_mode_order_priority>
+<ships_mode_order_priority>
+    <l_shipmode>TRUCK</l_shipmode>
+    <high_line_count>115</high_line_count>
+    <low_line_count>259</low_line_count>
+</ships_mode_order_priority>

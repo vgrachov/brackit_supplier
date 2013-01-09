@@ -1,0 +1,20 @@
+<order_priority>
+    1-URGENT
+    <order_count>9</order_count>
+</order_priority>
+<order_priority>
+    2-HIGH
+    <order_count>7</order_count>
+</order_priority>
+<order_priority>
+    3-MEDIUM
+    <order_count>9</order_count>
+</order_priority>
+<order_priority>
+    4-NOT SPECIFIED
+    <order_count>8</order_count>
+</order_priority>
+<order_priority>
+    5-LOW
+    <order_count>12</order_count>
+</order_priority>
