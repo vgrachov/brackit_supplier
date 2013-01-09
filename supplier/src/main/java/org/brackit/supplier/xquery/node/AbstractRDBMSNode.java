@@ -333,7 +333,7 @@ public abstract class AbstractRDBMSNode extends AbstractNode<AbstractRDBMSNode> 
 	}
 
 	public void delete() throws DocumentException {
-		// TODO Auto-generated method stub
+		logger.debug("delete node "+nodeName);
 
 	}
 

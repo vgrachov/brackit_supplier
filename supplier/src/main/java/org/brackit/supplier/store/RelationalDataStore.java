@@ -51,7 +51,10 @@ public class RelationalDataStore implements IRelationalStore {
 	}
 	
 	public Collection<?> lookup(String name) throws DocumentException {
-		throw new RuntimeException();
+		//throw new RuntimeException();
+		if (logger.isDebugEnabled())
+			logger.info("Try look up "+name);
+		return new FullScanCollection(name,null);
 	}
 
 	public Collection<?> create(String name) throws DocumentException {

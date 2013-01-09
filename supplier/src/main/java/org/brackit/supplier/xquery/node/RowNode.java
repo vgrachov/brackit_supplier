@@ -28,6 +28,8 @@
 package org.brackit.supplier.xquery.node;
 
 import org.apache.log4j.Logger;
+import org.brackit.berkeleydb.DatabaseAccess;
+import org.brackit.berkeleydb.IDatabaseAccess;
 import org.brackit.berkeleydb.Schema;
 import org.brackit.berkeleydb.tuple.AtomicChar;
 import org.brackit.berkeleydb.tuple.AtomicDate;
@@ -37,6 +39,7 @@ import org.brackit.berkeleydb.tuple.AtomicString;
 import org.brackit.berkeleydb.tuple.ColumnType;
 import org.brackit.berkeleydb.tuple.Tuple;
 import org.brackit.supplier.api.transaction.ITransaction;
+import org.brackit.supplier.api.transaction.impl.BerkeleyDBTransaction;
 import org.brackit.xquery.atomic.Atomic;
 import org.brackit.xquery.atomic.Date;
 import org.brackit.xquery.atomic.Dbl;
@@ -54,12 +57,14 @@ public class RowNode extends AbstractRDBMSNode {
 	
 	private final Tuple tuple;
 	private final Schema schema;
+	private final ITransaction transaction;
 	
 	
-	public RowNode(Tuple tuple, Schema schema) throws DocumentException{
+	public RowNode(Tuple tuple, Schema schema, ITransaction transaction) throws DocumentException{
 		super(NodeType.Row, new QNm("row"), null);
 		this.tuple = tuple;
 		this.schema = schema;
+		this.transaction = transaction;
 	}
 	
 	@Override
@@ -119,6 +124,21 @@ public class RowNode extends AbstractRDBMSNode {
 			}
 		};
 	}
+
+	@Override
+	public void delete() throws DocumentException {
+		if (logger.isDebugEnabled())
+			logger.debug("delete node from "+schema.getDatabaseName());
+		IDatabaseAccess databaseAccess = new DatabaseAccess(schema.getDatabaseName());
+		boolean result = false;
+		if (transaction != null)
+			result = databaseAccess.delete(tuple,((BerkeleyDBTransaction)transaction).get());
+		else
+			result = databaseAccess.delete(tuple,null);
+		if (logger.isDebugEnabled())
+			logger.debug("Result "+result);
+	}
+
 
 	@Override
 	public QNm getName() throws DocumentException {

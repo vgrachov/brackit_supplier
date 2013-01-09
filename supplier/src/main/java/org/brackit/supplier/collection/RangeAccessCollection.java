@@ -35,7 +35,7 @@ import org.brackit.berkeleydb.catalog.Catalog;
 import org.brackit.berkeleydb.cursor.ITupleCursor;
 import org.brackit.berkeleydb.cursor.RangeIndexSearchCursor;
 import org.brackit.berkeleydb.cursor.FullTableScanCursor;
-import org.brackit.berkeleydb.tuple.Atomic;
+import org.brackit.berkeleydb.tuple.AtomicValue;
 import org.brackit.berkeleydb.tuple.AtomicChar;
 import org.brackit.berkeleydb.tuple.AtomicDouble;
 import org.brackit.berkeleydb.tuple.AtomicInteger;
@@ -91,7 +91,7 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 		return null;
 	}
 	
-	private Atomic getAtomicBerkeleyDBValue(Column column, org.brackit.xquery.atomic.Atomic accessColumnKey){
+	private AtomicValue getAtomicBerkeleyDBValue(Column column, org.brackit.xquery.atomic.Atomic accessColumnKey){
 		if (column.getType() == ColumnType.String){
 			return new AtomicString(column.getColumnName(), ((Str)accessColumnKey).stringValue());
 		}else
@@ -120,8 +120,8 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 			throw new IllegalArgumentException("Column with name "+accessColumn.getAccessColumn()+" is not found");
 		if (!column.isDirectIndexExist())
 			throw new IllegalArgumentException("Column "+accessColumn.getAccessColumn()+" don't have index");
-		Atomic rightKey = null;
-		Atomic leftKey = null;
+		AtomicValue rightKey = null;
+		AtomicValue leftKey = null;
 		if (accessColumn instanceof EqualAccessColumn){
 			leftKey = getAtomicBerkeleyDBValue(column,((EqualAccessColumn)accessColumn).getKey());
 			rightKey = getAtomicBerkeleyDBValue(column,((EqualAccessColumn)accessColumn).getKey());
@@ -147,7 +147,7 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 				Tuple tuple = tupleCursor.next();
 				if (tuple!=null){
 					//logger.debug("Extracted tuple : "+tuple);
-					return new RowNode(tuple,schema);
+					return new RowNode(tuple,schema,transaction);
 				}else
 					return null;
 			}

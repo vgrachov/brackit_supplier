@@ -28,11 +28,9 @@
 package org.brackit.supplier;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.UnknownHostException;
-import java.util.Set;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.brackit.berkeleydb.environment.BerkeleyDBEnvironment;
@@ -43,56 +41,60 @@ import org.brackit.supplier.api.transaction.impl.BerkeleyDBTransactionManager;
 import org.brackit.supplier.compiler.RelationalCompilerChain;
 import org.brackit.supplier.io.helper.IOHelper;
 import org.brackit.supplier.store.RelationalDataStore;
-import org.brackit.xquery.QueryContext;
 import org.brackit.xquery.QueryException;
 import org.brackit.xquery.XQuery;
-import org.brackit.xquery.compiler.CompileChain;
 import org.brackit.xquery.compiler.optimizer.DefaultOptimizer;
 
-import com.mongodb.DB;
-import com.mongodb.DBCursor;
-import com.mongodb.Mongo;
-
-/**
- * Hello world!
- *
- */
 public class App 
 {
-	private static IOHelper ioHelper = new IOHelper();
 	private static final Logger logger = Logger.getLogger(App.class);
 	
-    public static void main( String[] args ) throws IOException, QueryException, InterruptedException,TransactionException{
-		DefaultOptimizer.JOIN_DETECTION = true;
-		DefaultOptimizer.UNNEST = true;
-
-    	logger.debug("Start");
-    	String content = ioHelper.getContent(new File("G:\\Projects\\.git\\brackit_supplier\\supplier\\src\\test\\resources\\queries\\q01.xq"));
-    	logger.debug("Query \n"+content);
-    	XQuery xq = new XQuery(new RelationalCompilerChain(), content);
-    	xq.setPrettyPrint(true);
-    	long start = System.currentTimeMillis();
+	
+	private static ITransaction openTransaction() throws TransactionException{
     	ITransactionManager transactionManager = new BerkeleyDBTransactionManager();
     	ITransaction transaction = null;
     	try {
 			transaction = transactionManager.begin();
+			return transaction;
 		} catch (TransactionException e) {
 			logger.fatal(e.getMessage());
 			throw e;
 		}
-    	RelationalQueryContext ctx = new RelationalQueryContext(new RelationalDataStore(), transaction);
-		PrintStream printStream = new PrintStream(new File("G:\\Projects\\.git\\brackit_supplier\\supplier\\src\\test\\resources\\queries\\10mb\\q011.res"));
-    	xq.serialize(ctx, printStream);
-    	logger.info("Full query time "+(System.currentTimeMillis()-start));
-    	printStream.close();
+	}
+	
+	private static void commit(ITransaction transaction) throws TransactionException{
     	if (transaction!=null){
     		try{
     			transaction.commit();
-    		}catch (Exception e) {
+    		}catch (TransactionException e) {
     			logger.error(e.getMessage());
 				transaction.abort();
 			}
     	}
-
+	}
+	
+    public static void main( String[] args ) throws IOException, QueryException, InterruptedException,TransactionException{
+		DefaultOptimizer.JOIN_DETECTION = true;
+		DefaultOptimizer.UNNEST = true;
+    	logger.info("Start");
+    	
+    	List<String> queries = IOHelper.getInstance().getContent(new File("G:\\Projects\\.git\\brackit_supplier\\supplier\\src\\test\\resources\\queries\\insertdelete.xq"));
+    	PrintStream printStream = new PrintStream(new File("G:\\Projects\\.git\\brackit_supplier\\supplier\\src\\test\\resources\\queries\\10mb\\insertdelete.res"));
+    	ITransaction transaction = openTransaction();
+    	RelationalQueryContext ctx = new RelationalQueryContext(new RelationalDataStore(), transaction);
+    	
+    	for (int i=0;i<queries.size();i++){
+    		String query = queries.get(i);
+	    	logger.debug("Query");
+	    	logger.debug(query);
+	    	XQuery xq = new XQuery(new RelationalCompilerChain(), query);
+	    	xq.setPrettyPrint(true);
+	    	long start = System.currentTimeMillis();
+	    	xq.serialize(ctx, printStream);
+	    	logger.info("Full query time "+(System.currentTimeMillis()-start));
+    	}
+    	commit(transaction);
+    	printStream.close();
+    	BerkeleyDBEnvironment.getInstance().close();
     }
 }

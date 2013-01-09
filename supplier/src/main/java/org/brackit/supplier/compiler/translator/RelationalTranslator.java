@@ -31,6 +31,8 @@ import org.brackit.supplier.access.LeftRangeAccessColumn;
 import org.brackit.supplier.access.RangeAccessColumn;
 import org.brackit.supplier.access.RightRangeAccessColumn;
 import org.brackit.supplier.collection.RangeAccessCollection;
+import org.brackit.supplier.expr.DeleteExpr;
+import org.brackit.supplier.expr.InsertExpr;
 import org.brackit.supplier.function.FullScanFunction;
 import org.brackit.supplier.function.RangeAccessFunction;
 import org.brackit.xquery.QueryException;
@@ -232,7 +234,22 @@ public class RelationalTranslator extends TopDownTranslator {
 					Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
 					Function fn = new FullScanFunction(tableName.stringValue());
 					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
+				}else
+				if (parent!=null && parent.getType() == XQ.FilterExpr){
+					Str tableName = (Str)parent.getChild(0).getChild(0).getValue();
+					Function fn = new FullScanFunction(tableName.stringValue());
+					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
+				
 				}
+		}else
+		if (node.getType() == XQ.InsertExpr){
+			Expr sourceExpr = expr(node.getChild(1), true);
+			QNm tableName = (QNm)node.getChild(1).getChild(0).getValue();
+			return new InsertExpr(sourceExpr, tableName);
+		}else
+		if (node.getType() == XQ.DeleteExpr){
+			Expr targetExpr = expr(node.getChild(0), true);
+			return new DeleteExpr(targetExpr);
 		}
 		return super.anyExpr(node);
 	}

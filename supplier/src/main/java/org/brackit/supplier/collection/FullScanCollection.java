@@ -59,13 +59,13 @@ public class FullScanCollection extends AbstractCollection<AbstractRDBMSNode>{
 	}
 	
 	public void delete() throws DocumentException {
-		// TODO Auto-generated method stub
+		logger.debug("FullScanCollection delete");
 		
 	}
 
 	public void remove(long documentID) throws OperationNotSupportedException,
 			DocumentException {
-		// TODO Auto-generated method stub
+		logger.debug("FullScanCollection remove");
 		
 	}
 
@@ -77,6 +77,7 @@ public class FullScanCollection extends AbstractCollection<AbstractRDBMSNode>{
 	public Stream<? extends AbstractRDBMSNode> getDocuments() throws DocumentException {
 		
 		final ITupleCursor tupleCursor = new FullTableScanCursor(schema.getDatabaseName(), ((BerkeleyDBTransaction)transaction).get());
+		//final ITupleCursor tupleCursor = new FullTableScanCursor(schema.getDatabaseName(), null);
 		tupleCursor.open();
 		
 		return new Stream<RowNode>() {
@@ -87,7 +88,7 @@ public class FullScanCollection extends AbstractCollection<AbstractRDBMSNode>{
 				Tuple tuple =  tupleCursor.next();
 				
 				if (tuple!=null){
-					RowNode rowNode = new RowNode(tuple,schema);
+					RowNode rowNode = new RowNode(tuple,schema,transaction);
 					timer +=System.currentTimeMillis()-start;
 					return rowNode;
 				}else
