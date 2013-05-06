@@ -28,13 +28,13 @@
 package org.brackit.supplier.collection;
 
 import org.apache.log4j.Logger;
-import org.brackit.berkeleydb.Schema;
 import org.brackit.berkeleydb.catalog.Catalog;
-import org.brackit.berkeleydb.cursor.ITupleCursor;
 import org.brackit.berkeleydb.cursor.FullTableScanCursor;
-import org.brackit.berkeleydb.tuple.Tuple;
-import org.brackit.supplier.api.transaction.ITransaction;
-import org.brackit.supplier.api.transaction.impl.BerkeleyDBTransaction;
+import org.brackit.relational.api.cursor.ITupleCursor;
+import org.brackit.relational.api.impl.DatabaseAccessFactory;
+import org.brackit.relational.api.transaction.ITransaction;
+import org.brackit.relational.metadata.Schema;
+import org.brackit.relational.metadata.tuple.Tuple;
 import org.brackit.supplier.xquery.node.AbstractRDBMSNode;
 import org.brackit.supplier.xquery.node.RowNode;
 import org.brackit.xquery.atomic.QNm;
@@ -76,7 +76,7 @@ public class FullScanCollection extends AbstractCollection<AbstractRDBMSNode>{
 
 	public Stream<? extends AbstractRDBMSNode> getDocuments() throws DocumentException {
 		
-		final ITupleCursor tupleCursor = new FullTableScanCursor(schema.getDatabaseName(), ((BerkeleyDBTransaction)transaction).get());
+		final ITupleCursor tupleCursor = DatabaseAccessFactory.getInstance().create(schema.getDatabaseName()).getFullScanCursor(transaction);
 		//final ITupleCursor tupleCursor = new FullTableScanCursor(schema.getDatabaseName(), null);
 		tupleCursor.open();
 		
@@ -86,7 +86,9 @@ public class FullScanCollection extends AbstractCollection<AbstractRDBMSNode>{
 			public RowNode next() throws DocumentException {
 				long start = System.currentTimeMillis();
 				Tuple tuple =  tupleCursor.next();
-				
+				counter++;
+				if (counter % 100000 == 0)
+					logger.debug(counter);
 				if (tuple!=null){
 					RowNode rowNode = new RowNode(tuple,schema,transaction);
 					timer +=System.currentTimeMillis()-start;

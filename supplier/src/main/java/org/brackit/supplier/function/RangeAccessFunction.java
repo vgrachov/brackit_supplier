@@ -27,12 +27,11 @@
  ******************************************************************************/
 package org.brackit.supplier.function;
 
-import org.brackit.relational.xquery.xdm.RowCollection;
+import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.RelationalQueryContext;
 import org.brackit.supplier.access.AccessColumn;
 import org.brackit.supplier.access.FullRangeAccessColumn;
 import org.brackit.supplier.access.RangeAccessColumn;
-import org.brackit.supplier.api.transaction.ITransaction;
 import org.brackit.supplier.collection.RangeAccessCollection;
 import org.brackit.xquery.QueryContext;
 import org.brackit.xquery.QueryException;

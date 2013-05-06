@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.brackit.relational.xquery.function.fn.RowCollectionFunction;
 import org.brackit.supplier.access.AccessColumn;
 import org.brackit.supplier.access.EqualAccessColumn;
 import org.brackit.supplier.access.FullRangeAccessColumn;
@@ -89,7 +88,7 @@ public class RelationalTranslator extends TopDownTranslator {
 			value = (Dec)valueNode.getValue();
 			logger.debug("Equal match value : "+value );
 		}else
-			throw new IllegalArgumentException("Type can't be process");
+			throw new IllegalArgumentException("Type can't be process "+value);
 		return value;
 	}
 	
@@ -222,8 +221,10 @@ public class RelationalTranslator extends TopDownTranslator {
 							System.out.println("Found equal value "+((EqualAccessColumn)accessColumn).getKey());
 							Function fn = new RangeAccessFunction((EqualAccessColumn)accessColumn);
 							return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
-						}else
-						return super.anyExpr(node);
+						}else{
+							Function fn = new FullScanFunction(tableName.stringValue());
+							return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
+						}
 					}
 				}else{
 					Function fn = new FullScanFunction(tableName.stringValue());

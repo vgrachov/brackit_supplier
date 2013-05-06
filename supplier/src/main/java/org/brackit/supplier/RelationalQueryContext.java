@@ -28,7 +28,7 @@
 
 package org.brackit.supplier;
 
-import org.brackit.supplier.api.transaction.ITransaction;
+import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.store.IRelationalStore;
 import org.brackit.xquery.QueryContext;
 import org.brackit.xquery.xdm.Store;

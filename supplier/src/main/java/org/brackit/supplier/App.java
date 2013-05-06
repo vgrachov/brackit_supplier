@@ -30,14 +30,16 @@ package org.brackit.supplier;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.brackit.berkeleydb.environment.BerkeleyDBEnvironment;
-import org.brackit.supplier.api.transaction.ITransaction;
-import org.brackit.supplier.api.transaction.ITransactionManager;
-import org.brackit.supplier.api.transaction.TransactionException;
-import org.brackit.supplier.api.transaction.impl.BerkeleyDBTransactionManager;
+import org.brackit.relational.api.transaction.ITransaction;
+import org.brackit.relational.api.transaction.ITransactionManager;
+import org.brackit.relational.api.transaction.IsolationLevel;
+import org.brackit.relational.api.transaction.TransactionException;
+import org.brackit.relational.api.transaction.impl.TransactionManager;
 import org.brackit.supplier.compiler.RelationalCompilerChain;
 import org.brackit.supplier.io.helper.IOHelper;
 import org.brackit.supplier.store.RelationalDataStore;
@@ -51,15 +53,8 @@ public class App
 	
 	
 	private static ITransaction openTransaction() throws TransactionException{
-    	ITransactionManager transactionManager = new BerkeleyDBTransactionManager();
-    	ITransaction transaction = null;
-    	try {
-			transaction = transactionManager.begin();
-			return transaction;
-		} catch (TransactionException e) {
-			logger.fatal(e.getMessage());
-			throw e;
-		}
+		ITransaction transaction = TransactionManager.getInstance().begin(IsolationLevel.ReadCommited);
+		return transaction;
 	}
 	
 	private static void commit(ITransaction transaction) throws TransactionException{
@@ -77,11 +72,11 @@ public class App
 		DefaultOptimizer.JOIN_DETECTION = true;
 		DefaultOptimizer.UNNEST = true;
     	logger.info("Start");
-    	
-    	List<String> queries = IOHelper.getInstance().getContent(new File("G:\\Projects\\.git\\brackit_supplier\\supplier\\src\\test\\resources\\queries\\insertdelete.xq"));
-    	PrintStream printStream = new PrintStream(new File("G:\\Projects\\.git\\brackit_supplier\\supplier\\src\\test\\resources\\queries\\10mb\\insertdelete.res"));
+    	System.gc();
+    	List<String> queries = IOHelper.getInstance().getContent(new File("/home/vgrachov/Projects/brackit_supplier/supplier/src/test/resources/queries/q02.xq"));
+    	PrintStream printStream = new PrintStream(new File("/home/vgrachov/Projects/brackit_supplier/supplier/src/test/resources/queries/q02_10.res"));
     	ITransaction transaction = openTransaction();
-    	RelationalQueryContext ctx = new RelationalQueryContext(new RelationalDataStore(), transaction);
+    																																																				RelationalQueryContext ctx = new RelationalQueryContext(new RelationalDataStore(), transaction);
     	
     	for (int i=0;i<queries.size();i++){
     		String query = queries.get(i);

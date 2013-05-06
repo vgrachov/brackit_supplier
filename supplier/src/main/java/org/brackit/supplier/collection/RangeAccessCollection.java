@@ -29,28 +29,33 @@ package org.brackit.supplier.collection;
 
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.apache.log4j.Logger;
-import org.brackit.berkeleydb.Schema;
 import org.brackit.berkeleydb.catalog.Catalog;
-import org.brackit.berkeleydb.cursor.ITupleCursor;
 import org.brackit.berkeleydb.cursor.RangeIndexSearchCursor;
 import org.brackit.berkeleydb.cursor.FullTableScanCursor;
-import org.brackit.berkeleydb.tuple.AtomicValue;
-import org.brackit.berkeleydb.tuple.AtomicChar;
-import org.brackit.berkeleydb.tuple.AtomicDouble;
-import org.brackit.berkeleydb.tuple.AtomicInteger;
-import org.brackit.berkeleydb.tuple.AtomicString;
-import org.brackit.berkeleydb.tuple.Column;
-import org.brackit.berkeleydb.tuple.ColumnType;
-import org.brackit.berkeleydb.tuple.Tuple;
+import org.brackit.relational.api.cursor.ITupleCursor;
+import org.brackit.relational.api.impl.DatabaseAccessFactory;
+import org.brackit.relational.api.transaction.ITransaction;
+import org.brackit.relational.metadata.Schema;
+import org.brackit.relational.metadata.tuple.AtomicChar;
+import org.brackit.relational.metadata.tuple.AtomicDate;
+import org.brackit.relational.metadata.tuple.AtomicDouble;
+import org.brackit.relational.metadata.tuple.AtomicInteger;
+import org.brackit.relational.metadata.tuple.AtomicString;
+import org.brackit.relational.metadata.tuple.AtomicValue;
+import org.brackit.relational.metadata.tuple.Column;
+import org.brackit.relational.metadata.tuple.ColumnType;
+import org.brackit.relational.metadata.tuple.Tuple;
+import org.brackit.relational.properties.RelationalStorageProperties;
 import org.brackit.supplier.access.AccessColumn;
 import org.brackit.supplier.access.EqualAccessColumn;
 import org.brackit.supplier.access.FullRangeAccessColumn;
 import org.brackit.supplier.access.LeftRangeAccessColumn;
 import org.brackit.supplier.access.RangeAccessColumn;
 import org.brackit.supplier.access.RightRangeAccessColumn;
-import org.brackit.supplier.api.transaction.ITransaction;
-import org.brackit.supplier.api.transaction.impl.BerkeleyDBTransaction;
 import org.brackit.supplier.xquery.node.AbstractRDBMSNode;
 import org.brackit.supplier.xquery.node.RowNode;
 import org.brackit.xquery.atomic.Dec;
@@ -92,6 +97,7 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 	}
 	
 	private AtomicValue getAtomicBerkeleyDBValue(Column column, org.brackit.xquery.atomic.Atomic accessColumnKey){
+		SimpleDateFormat dateFormat = new SimpleDateFormat(RelationalStorageProperties.getDatePattern());
 		if (column.getType() == ColumnType.String){
 			return new AtomicString(column.getColumnName(), ((Str)accessColumnKey).stringValue());
 		}else
@@ -103,6 +109,14 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 		}else
 		if (column.getType() == ColumnType.Char){
 			return new AtomicChar(column.getColumnName(), ((Str)accessColumnKey).stringValue().charAt(0));
+		}else
+		if (column.getType() == ColumnType.Date){
+			try{
+				return new AtomicDate(column.getColumnName(), dateFormat.parse(((Str)accessColumnKey).stringValue()).getTime() );
+			} catch(ParseException e){
+				logger.error(e.getMessage());
+				return null;
+			}
 		}else
 			throw new IllegalArgumentException("Not supported type for index scan");
 	}
@@ -139,21 +153,29 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 			throw new IllegalArgumentException("Such range access method is not supported");
 			
 		//Column column, Atomic leftKey, Atomic rightKey
-		final ITupleCursor tupleCursor = new RangeIndexSearchCursor(column,leftKey,rightKey,((BerkeleyDBTransaction)transaction).get());
+		final ITupleCursor tupleCursor = DatabaseAccessFactory.getInstance().create(schema.getDatabaseName()).getRangeIndexScanCursor(column,leftKey,rightKey,transaction);
 		tupleCursor.open();
 		return new Stream<AbstractRDBMSNode>() {
-
+			
+			private long timer = 0;
+			
 			public AbstractRDBMSNode next() throws DocumentException {
+				long start = System.currentTimeMillis();
 				Tuple tuple = tupleCursor.next();
 				if (tuple!=null){
 					//logger.debug("Extracted tuple : "+tuple);
-					return new RowNode(tuple,schema,transaction);
+					RowNode rowNode =  new RowNode(tuple,schema,transaction);
+					timer +=System.currentTimeMillis()-start;
+					return rowNode;
 				}else
 					return null;
 			}
 
 			public void close() {
 				tupleCursor.close();
+				if (logger.isInfoEnabled())
+					logger.info("Time for scan table "+schema.getDatabaseName()+" - "+timer);
+
 			}
 		};
 	}

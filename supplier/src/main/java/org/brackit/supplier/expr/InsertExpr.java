@@ -28,23 +28,27 @@
 
 package org.brackit.supplier.expr;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
-import org.brackit.berkeleydb.DatabaseAccess;
-import org.brackit.berkeleydb.IDatabaseAccess;
-import org.brackit.berkeleydb.Schema;
 import org.brackit.berkeleydb.catalog.Catalog;
-import org.brackit.berkeleydb.tuple.AtomicChar;
-import org.brackit.berkeleydb.tuple.AtomicDouble;
-import org.brackit.berkeleydb.tuple.AtomicInteger;
-import org.brackit.berkeleydb.tuple.AtomicString;
-import org.brackit.berkeleydb.tuple.AtomicValue;
-import org.brackit.berkeleydb.tuple.Column;
-import org.brackit.berkeleydb.tuple.ColumnType;
+import org.brackit.berkeleydb.cursor.BerkeleydbDatabaseAccess;
+import org.brackit.relational.api.IDatabaseAccess;
+import org.brackit.relational.api.impl.DatabaseAccessFactory;
+import org.brackit.relational.api.transaction.ITransaction;
+import org.brackit.relational.metadata.Schema;
+import org.brackit.relational.metadata.tuple.AtomicChar;
+import org.brackit.relational.metadata.tuple.AtomicDate;
+import org.brackit.relational.metadata.tuple.AtomicDouble;
+import org.brackit.relational.metadata.tuple.AtomicInteger;
+import org.brackit.relational.metadata.tuple.AtomicString;
+import org.brackit.relational.metadata.tuple.AtomicValue;
+import org.brackit.relational.metadata.tuple.Column;
+import org.brackit.relational.metadata.tuple.ColumnType;
+import org.brackit.relational.properties.RelationalStorageProperties;
 import org.brackit.supplier.RelationalQueryContext;
-import org.brackit.supplier.api.transaction.ITransaction;
-import org.brackit.supplier.api.transaction.impl.BerkeleyDBTransaction;
 import org.brackit.xquery.QueryContext;
 import org.brackit.xquery.QueryException;
 import org.brackit.xquery.Tuple;
@@ -93,7 +97,7 @@ public class InsertExpr extends ConstructedNodeBuilder implements Expr {
 	}
 	
 
-	private AtomicValue<?> getAtomicBerkeleyDBValue(Column column, Atomic value){
+	private AtomicValue getAtomicBerkeleyDBValue(Column column, Atomic value){
 		if (column.getType() == ColumnType.String){
 			return new AtomicString(column.getColumnName(), value.stringValue());
 		}else
@@ -106,6 +110,17 @@ public class InsertExpr extends ConstructedNodeBuilder implements Expr {
 		if (column.getType() == ColumnType.Char){
 			return new AtomicChar(column.getColumnName(), value.stringValue().charAt(0));
 		}else
+		if (column.getType() == ColumnType.Date){
+			SimpleDateFormat dateFormat = new SimpleDateFormat(RelationalStorageProperties.getDatePattern());
+			try{
+				return new AtomicDate(column.getColumnName(), dateFormat.parse(value.stringValue()).getTime());
+			}catch (ParseException e){
+				//TODO: add exception
+				logger.error(e.getMessage());
+				return null;
+			}
+		}else
+			
 			throw new IllegalArgumentException("Not supported type for index scan");
 	}
 	
@@ -134,7 +149,7 @@ public class InsertExpr extends ConstructedNodeBuilder implements Expr {
 				nextField = nextField.getNextSibling();
 			}
 			if (fieldsMap.size()==schema.getColumns().length){
-				IDatabaseAccess databaseAccess = new DatabaseAccess(tableName.stringValue());
+				IDatabaseAccess databaseAccess = DatabaseAccessFactory.getInstance().create(tableName.stringValue());
 				AtomicValue[] record = new AtomicValue[schema.getColumns().length]; 
 				for (int i=0;i<schema.getColumns().length;i++){
 					Column column = schema.getColumns()[i];
@@ -143,10 +158,7 @@ public class InsertExpr extends ConstructedNodeBuilder implements Expr {
 					}else
 						throw new QueryException(new QNm("Field "+column.getColumnName()+ " is not setted"));
 				}
-				if (transaction==null)
-					databaseAccess.insert(new org.brackit.berkeleydb.tuple.Tuple(record));
-				else
-					databaseAccess.insert(new org.brackit.berkeleydb.tuple.Tuple(record),((BerkeleyDBTransaction)transaction).get());
+				databaseAccess.insert(new org.brackit.relational.metadata.tuple.Tuple(record),transaction);
 			}else
 				throw new QueryException(new QNm("Not all fields are setted"));
 		}else{

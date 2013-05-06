@@ -27,19 +27,19 @@
  ******************************************************************************/
 package org.brackit.supplier.xquery.node;
 
+import java.text.SimpleDateFormat;
+
 import org.apache.log4j.Logger;
-import org.brackit.berkeleydb.DatabaseAccess;
-import org.brackit.berkeleydb.IDatabaseAccess;
-import org.brackit.berkeleydb.Schema;
-import org.brackit.berkeleydb.tuple.AtomicChar;
-import org.brackit.berkeleydb.tuple.AtomicDate;
-import org.brackit.berkeleydb.tuple.AtomicDouble;
-import org.brackit.berkeleydb.tuple.AtomicInteger;
-import org.brackit.berkeleydb.tuple.AtomicString;
-import org.brackit.berkeleydb.tuple.ColumnType;
-import org.brackit.berkeleydb.tuple.Tuple;
-import org.brackit.supplier.api.transaction.ITransaction;
-import org.brackit.supplier.api.transaction.impl.BerkeleyDBTransaction;
+import org.brackit.relational.api.IDatabaseAccess;
+import org.brackit.relational.api.impl.DatabaseAccessFactory;
+import org.brackit.relational.api.transaction.ITransaction;
+import org.brackit.relational.metadata.Schema;
+import org.brackit.relational.metadata.tuple.AtomicDate;
+import org.brackit.relational.metadata.tuple.AtomicDouble;
+import org.brackit.relational.metadata.tuple.AtomicInteger;
+import org.brackit.relational.metadata.tuple.ColumnType;
+import org.brackit.relational.metadata.tuple.Tuple;
+import org.brackit.relational.properties.RelationalStorageProperties;
 import org.brackit.xquery.atomic.Atomic;
 import org.brackit.xquery.atomic.Date;
 import org.brackit.xquery.atomic.Dbl;
@@ -58,6 +58,7 @@ public class RowNode extends AbstractRDBMSNode {
 	private final Tuple tuple;
 	private final Schema schema;
 	private final ITransaction transaction;
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(RelationalStorageProperties.getDatePattern());
 	
 	
 	public RowNode(Tuple tuple, Schema schema, ITransaction transaction) throws DocumentException{
@@ -106,10 +107,7 @@ public class RowNode extends AbstractRDBMSNode {
 					else
 					if (schema.getColumns()[counter].getType() == ColumnType.Date){
 						AtomicDate atomicDate = (AtomicDate)tuple.getFields()[counter];
-						//String date = String.valueOf(atomicDate.getData().getYear()+1900)+"-"+String.valueOf(atomicDate.getData().getMonth())+"-"+String.valueOf(atomicDate.getData().getDay());
-						//logger.info(date);
-						Date date = new Date((short)(atomicDate.getData().getYear()+1900),(byte)atomicDate.getData().getMonth(),(byte)atomicDate.getData().getDay(),null);
-						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Date((short)(atomicDate.getData().getYear()+1900),(byte)atomicDate.getData().getMonth(),(byte)atomicDate.getData().getDay(),null));
+						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Str(DATE_FORMAT.format(new java.util.Date(atomicDate.getData()))));
 					}else
 						throw new IllegalArgumentException();
 					counter++;
@@ -129,10 +127,10 @@ public class RowNode extends AbstractRDBMSNode {
 	public void delete() throws DocumentException {
 		if (logger.isDebugEnabled())
 			logger.debug("delete node from "+schema.getDatabaseName());
-		IDatabaseAccess databaseAccess = new DatabaseAccess(schema.getDatabaseName());
+		IDatabaseAccess databaseAccess = DatabaseAccessFactory.getInstance().create(schema.getDatabaseName());
 		boolean result = false;
 		if (transaction != null)
-			result = databaseAccess.delete(tuple,((BerkeleyDBTransaction)transaction).get());
+			result = databaseAccess.delete(tuple,transaction);
 		else
 			result = databaseAccess.delete(tuple,null);
 		if (logger.isDebugEnabled())

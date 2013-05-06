@@ -28,9 +28,8 @@
 
 package org.brackit.supplier.store;
 
+import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.access.AccessColumn;
-import org.brackit.supplier.api.transaction.ITransaction;
-import org.brackit.xquery.atomic.Atomic;
 import org.brackit.xquery.xdm.Collection;
 import org.brackit.xquery.xdm.DocumentException;
 import org.brackit.xquery.xdm.Store;

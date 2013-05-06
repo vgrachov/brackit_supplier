@@ -28,8 +28,8 @@
 
 package org.brackit.supplier.function;
 
+import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.RelationalQueryContext;
-import org.brackit.supplier.api.transaction.ITransaction;
 import org.brackit.xquery.QueryContext;
 import org.brackit.xquery.QueryException;
 import org.brackit.xquery.atomic.QNm;

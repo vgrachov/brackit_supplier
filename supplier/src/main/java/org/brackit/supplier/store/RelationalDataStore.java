@@ -29,10 +29,8 @@
 package org.brackit.supplier.store;
 
 import org.apache.log4j.Logger;
+import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.access.AccessColumn;
-import org.brackit.supplier.api.transaction.ITransaction;
-import org.brackit.supplier.api.transaction.ITransactionManager;
-import org.brackit.supplier.api.transaction.TransactionException;
 import org.brackit.supplier.collection.FullScanCollection;
 import org.brackit.supplier.collection.RangeAccessCollection;
 import org.brackit.xquery.atomic.Atomic;
