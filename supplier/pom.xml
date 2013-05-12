@@ -42,4 +42,27 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<executable>java</executable>
+					<arguments>
+						<argument>-Xms2048m</argument>
+						<argument>-Xmx2048m</argument>
+						<argument>-classpath</argument>
+						<classpath/>
+						<argument>-Djava.library.path=/usr/local/BerkeleyDB.5.3/lib/</argument>
+						<argument>-Dtbl_path=/Users/vgrachov/Desktop/db_storage/1gb_tbl/</argument>
+						<argument>-Dberkeley_db_path=/Users/vgrachov/Desktop/db_storage/1gb_data/</argument>						
+						<argument>-Xdebug</argument>
+						<argument>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044</argument>
+						<argument>org.brackit.supplier.App</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>	
 </project>
