@@ -28,6 +28,7 @@
 package org.brackit.supplier.xquery.node;
 
 import java.text.SimpleDateFormat;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.brackit.relational.api.IDatabaseAccess;
@@ -53,19 +54,20 @@ import org.brackit.xquery.xdm.Stream;
 
 public class RowNode extends AbstractRDBMSNode {
 
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(RelationalStorageProperties.getDatePattern());
 	private static final Logger logger = Logger.getLogger(RowNode.class);
 	
 	private final Tuple tuple;
 	private final Schema schema;
 	private final ITransaction transaction;
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(RelationalStorageProperties.getDatePattern());
+	private final Set<String> projectionFields;
 	
-	
-	public RowNode(Tuple tuple, Schema schema, ITransaction transaction) throws DocumentException{
+	public RowNode(Tuple tuple, Schema schema, ITransaction transaction, Set<String> projectionFields) throws DocumentException{
 		super(NodeType.Row, new QNm("row"), null);
 		this.tuple = tuple;
 		this.schema = schema;
 		this.transaction = transaction;
+		this.projectionFields = projectionFields;
 	}
 	
 	@Override
@@ -87,33 +89,38 @@ public class RowNode extends AbstractRDBMSNode {
 			throws DocumentException {
 		return new Stream<FieldNode>() {
 			private int counter = 0;
+			private int index = 0;
 			public FieldNode next() throws DocumentException {
-				if (counter<schema.getColumns().length){
-					//logger.debug(schema.getColumns()[counter].getColumnName().toLowerCase());
-					//logger.debug(tuple);
-					//logger.debug(tuple.getFields()[counter].toString());
-					FieldNode fieldNode = null;
-					if (schema.getColumns()[counter].getType() == ColumnType.String)
-						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Str(tuple.getFields()[counter].toString()));
-					else
-					if (schema.getColumns()[counter].getType() == ColumnType.Integer)
-						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Int(((AtomicInteger)tuple.getFields()[counter]).getData()));
-					else
-					if (schema.getColumns()[counter].getType() == ColumnType.Double)
-						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Dbl(((AtomicDouble)tuple.getFields()[counter]).getData()));
-					else
-					if (schema.getColumns()[counter].getType() == ColumnType.Char)
-						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Str(tuple.getFields()[counter].toString()));
-					else
-					if (schema.getColumns()[counter].getType() == ColumnType.Date){
-						AtomicDate atomicDate = (AtomicDate)tuple.getFields()[counter];
-						fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Str(DATE_FORMAT.format(new java.util.Date(atomicDate.getData()))));
-					}else
-						throw new IllegalArgumentException();
+				 while(counter<schema.getColumns().length){
+					if (projectionFields.contains(schema.getColumns()[counter].getColumnName())) {
+						//logger.debug(schema.getColumns()[counter].getColumnName().toLowerCase());
+						//logger.debug(tuple);
+						//logger.debug(tuple.getFields()[index].toString());
+						FieldNode fieldNode = null;
+						if (schema.getColumns()[counter].getType() == ColumnType.String)
+							fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Str(tuple.getFields()[index].toString()));
+						else
+						if (schema.getColumns()[counter].getType() == ColumnType.Integer)
+							fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Int(((AtomicInteger)tuple.getFields()[index]).getData()));
+						else
+						if (schema.getColumns()[counter].getType() == ColumnType.Double)
+							fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Dbl(((AtomicDouble)tuple.getFields()[index]).getData()));
+						else
+						if (schema.getColumns()[counter].getType() == ColumnType.Char)
+							fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Str(tuple.getFields()[index].toString()));
+						else
+						if (schema.getColumns()[counter].getType() == ColumnType.Date){
+							AtomicDate atomicDate = (AtomicDate)tuple.getFields()[index];
+							fieldNode = new FieldNode(new QNm(schema.getColumns()[counter].getColumnName()), RowNode.this, new Str(DATE_FORMAT.format(new java.util.Date(atomicDate.getData()))));
+						}else
+							throw new IllegalArgumentException();
+						counter++;
+						index++;
+						return fieldNode;
+					}
 					counter++;
-					return fieldNode;
-				}else
-					return null;
+				}
+				 return null;
 			}
 
 			public void close() {

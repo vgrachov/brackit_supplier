@@ -28,15 +28,21 @@
 
 package org.brackit.supplier.store;
 
+import java.util.Set;
+
 import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.access.AccessColumn;
 import org.brackit.xquery.xdm.Collection;
 import org.brackit.xquery.xdm.DocumentException;
 import org.brackit.xquery.xdm.Store;
 
+/**
+ * Provides interface to FullTableScan collection and RangeAccess collection for
+ * corresponding FullTableScanFunction and RangeAccessFunction.
+ */
 public interface IRelationalStore extends Store{
 
-	Collection<?> rangeAccess(AccessColumn column, ITransaction transaction) throws DocumentException;
-	Collection<?> fullscan(String name, ITransaction transaction) throws DocumentException;
+	Collection<?> rangeAccess(AccessColumn column, ITransaction transaction, Set<String> projectionFields) throws DocumentException;
+	Collection<?> fullscan(String name, ITransaction transaction, Set<String> projectionFields) throws DocumentException;
 	
 }

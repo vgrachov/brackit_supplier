@@ -27,6 +27,8 @@
  ******************************************************************************/
 package org.brackit.supplier.collection;
 
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.brackit.berkeleydb.catalog.Catalog;
 import org.brackit.berkeleydb.cursor.FullTableScanCursor;
@@ -49,13 +51,15 @@ public class FullScanCollection extends AbstractCollection<AbstractRDBMSNode>{
 
 	private static final Logger logger = Logger.getLogger(FullScanCollection.class);
 	private final Schema schema;
+	private final Set<String> projectionFields;
 	
 	private ITransaction transaction;
 	
-	public FullScanCollection(String tableName, ITransaction transaction){
+	public FullScanCollection(String tableName, ITransaction transaction, Set<String> projectionFields){
 		super(tableName);
 		this.schema = Catalog.getInstance().getSchemaByDatabaseName(tableName);
 		this.transaction = transaction;
+		this.projectionFields = projectionFields;
 	}
 	
 	public void delete() throws DocumentException {
@@ -76,7 +80,7 @@ public class FullScanCollection extends AbstractCollection<AbstractRDBMSNode>{
 
 	public Stream<? extends AbstractRDBMSNode> getDocuments() throws DocumentException {
 		
-		final ITupleCursor tupleCursor = DatabaseAccessFactory.getInstance().create(schema.getDatabaseName()).getFullScanCursor(transaction);
+		final ITupleCursor tupleCursor = DatabaseAccessFactory.getInstance().create(schema.getDatabaseName()).getFullScanCursor(transaction, projectionFields);
 		//final ITupleCursor tupleCursor = new FullTableScanCursor(schema.getDatabaseName(), null);
 		tupleCursor.open();
 		
@@ -90,7 +94,7 @@ public class FullScanCollection extends AbstractCollection<AbstractRDBMSNode>{
 				if (counter % 100000 == 0)
 					logger.debug(counter);
 				if (tuple!=null){
-					RowNode rowNode = new RowNode(tuple,schema,transaction);
+					RowNode rowNode = new RowNode(tuple,schema,transaction, projectionFields);
 					timer +=System.currentTimeMillis()-start;
 					return rowNode;
 				}else

@@ -28,6 +28,8 @@
 
 package org.brackit.supplier.store;
 
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.access.AccessColumn;
@@ -49,10 +51,11 @@ public class RelationalDataStore implements IRelationalStore {
 	}
 	
 	public Collection<?> lookup(String name) throws DocumentException {
-		//throw new RuntimeException();
-		if (logger.isDebugEnabled())
+		throw new RuntimeException();
+		/*if (logger.isDebugEnabled())
 			logger.info("Try look up "+name);
-		return new FullScanCollection(name,null);
+		return new FullScanCollection(name,null);*/
+		//return null;
 	}
 
 	public Collection<?> create(String name) throws DocumentException {
@@ -82,16 +85,16 @@ public class RelationalDataStore implements IRelationalStore {
 		
 	}
 
-	public Collection<?> rangeAccess(AccessColumn column, ITransaction transaction) throws DocumentException{
+	public Collection<?> rangeAccess(AccessColumn column, ITransaction transaction, Set<String> projectionFields) throws DocumentException{
 		if (logger.isDebugEnabled())
 			logger.info("Try look up "+column.getTableName());
-		return new RangeAccessCollection(column,transaction);
+		return new RangeAccessCollection(column,transaction, projectionFields);
 	}
 
-	public Collection<?> fullscan(String tableName, ITransaction transaction) throws DocumentException {
+	public Collection<?> fullscan(String tableName, ITransaction transaction, Set<String> projectionFields) throws DocumentException {
 		if (logger.isDebugEnabled())
 			logger.info("Try look up "+tableName);
-		return new FullScanCollection(tableName,transaction);
+		return new FullScanCollection(tableName,transaction,projectionFields);
 	}
 
 }

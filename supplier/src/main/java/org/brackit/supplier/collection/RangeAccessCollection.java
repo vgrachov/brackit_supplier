@@ -31,6 +31,7 @@ package org.brackit.supplier.collection;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.brackit.berkeleydb.catalog.Catalog;
@@ -72,12 +73,14 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 	private final AccessColumn accessColumn;
 	private static final Logger logger = Logger.getLogger(RangeAccessCollection.class);
 	private final ITransaction transaction;
+	private final Set<String> projectionFields;
 	
 	
-	public RangeAccessCollection(AccessColumn accessColumn,ITransaction transaction) {
+	public RangeAccessCollection(AccessColumn accessColumn,ITransaction transaction, Set<String> projectionFields) {
 		super(accessColumn.getTableName());
 		this.accessColumn = accessColumn;
 		this.transaction = transaction;
+		this.projectionFields = projectionFields;
 	}
 	
 	public void delete() throws DocumentException {
@@ -153,7 +156,7 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 			throw new IllegalArgumentException("Such range access method is not supported");
 			
 		//Column column, Atomic leftKey, Atomic rightKey
-		final ITupleCursor tupleCursor = DatabaseAccessFactory.getInstance().create(schema.getDatabaseName()).getRangeIndexScanCursor(column,leftKey,rightKey,transaction);
+		final ITupleCursor tupleCursor = DatabaseAccessFactory.getInstance().create(schema.getDatabaseName()).getRangeIndexScanCursor(column,leftKey,rightKey,transaction, projectionFields);
 		tupleCursor.open();
 		return new Stream<AbstractRDBMSNode>() {
 			
@@ -164,7 +167,7 @@ public class RangeAccessCollection extends AbstractCollection<AbstractRDBMSNode>
 				Tuple tuple = tupleCursor.next();
 				if (tuple!=null){
 					//logger.debug("Extracted tuple : "+tuple);
-					RowNode rowNode =  new RowNode(tuple,schema,transaction);
+					RowNode rowNode = new RowNode(tuple,schema,transaction, projectionFields);
 					timer +=System.currentTimeMillis()-start;
 					return rowNode;
 				}else

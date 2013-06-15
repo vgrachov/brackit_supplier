@@ -27,12 +27,11 @@
  ******************************************************************************/
 package org.brackit.supplier.function;
 
+import java.util.Set;
+
 import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.RelationalQueryContext;
 import org.brackit.supplier.access.AccessColumn;
-import org.brackit.supplier.access.FullRangeAccessColumn;
-import org.brackit.supplier.access.RangeAccessColumn;
-import org.brackit.supplier.collection.RangeAccessCollection;
 import org.brackit.xquery.QueryContext;
 import org.brackit.xquery.QueryException;
 import org.brackit.xquery.atomic.QNm;
@@ -46,6 +45,8 @@ import org.brackit.xquery.xdm.type.Cardinality;
 import org.brackit.xquery.xdm.type.DocumentType;
 import org.brackit.xquery.xdm.type.SequenceType;
 
+import com.google.common.base.Preconditions;
+
 public class RangeAccessFunction extends Collection{
 	public static final QNm FN_COLLECTION = new QNm(Namespaces.FN_NSURI, Namespaces.FN_PREFIX, "collection");
 	public static final Signature SIGNATURE = new Signature(
@@ -53,19 +54,20 @@ public class RangeAccessFunction extends Collection{
 			new SequenceType(AtomicType.STR, Cardinality.ZeroOrOne));
 	
 	private final AccessColumn accessColumn;
+	private final Set<String> projectionFields;
 	
-	public RangeAccessFunction(AccessColumn accessColumn){
+	public RangeAccessFunction(AccessColumn accessColumn, Set<String> projectionFields) {
 		super(FN_COLLECTION, SIGNATURE);
 		this.accessColumn = accessColumn;
+		this.projectionFields = projectionFields;
 	}
 	
 	@Override
 	public Sequence execute(StaticContext sctx, QueryContext ctx,
-			Sequence[] args) throws QueryException
-	{
+			Sequence[] args) throws QueryException {
+		Preconditions.checkNotNull(projectionFields);
 		RelationalQueryContext context = (RelationalQueryContext)ctx;
 		ITransaction transaction = context.getTransaction();
-		return context.getStore().rangeAccess(accessColumn,transaction);
+		return context.getStore().rangeAccess(accessColumn,transaction, projectionFields);
 	}
-
 }

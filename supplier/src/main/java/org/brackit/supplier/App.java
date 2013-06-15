@@ -72,16 +72,14 @@ public class App
 		DefaultOptimizer.JOIN_DETECTION = true;
 		DefaultOptimizer.UNNEST = true;
     	logger.info("Start");
-    	System.gc();
-    	List<String> queries = IOHelper.getInstance().getContent(new File("/home/vgrachov/Projects/brackit_supplier/supplier/src/test/resources/queries/q02.xq"));
-    	PrintStream printStream = new PrintStream(new File("/home/vgrachov/Projects/brackit_supplier/supplier/src/test/resources/queries/q02_10.res"));
+    	List<String> queries = IOHelper.getInstance().getContent(new File("/Users/vgrachov/Desktop/master_project/brackit_supplier/supplier/src/test/resources/queries/q03.xq"));
+     	PrintStream printStream = new PrintStream(new File("/Users/vgrachov/Desktop/master_project/brackit_supplier/supplier/src/test/resources/queries/q03.res"));
     	ITransaction transaction = openTransaction();
-    																																																				RelationalQueryContext ctx = new RelationalQueryContext(new RelationalDataStore(), transaction);
-    	
+    	RelationalQueryContext ctx = new RelationalQueryContext(new RelationalDataStore(), transaction);
     	for (int i=0;i<queries.size();i++){
     		String query = queries.get(i);
 	    	logger.debug("Query");
-	    	logger.debug(query);
+	     	logger.debug(query);
 	    	XQuery xq = new XQuery(new RelationalCompilerChain(), query);
 	    	xq.setPrettyPrint(true);
 	    	long start = System.currentTimeMillis();

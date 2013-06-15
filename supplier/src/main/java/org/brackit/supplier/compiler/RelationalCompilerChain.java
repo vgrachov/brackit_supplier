@@ -23,26 +23,32 @@ import org.brackit.supplier.compiler.translator.RelationalTranslator;
 import org.brackit.xquery.atomic.QNm;
 import org.brackit.xquery.atomic.Str;
 import org.brackit.xquery.compiler.CompileChain;
-import org.brackit.xquery.compiler.optimizer.DefaultOptimizer;
 import org.brackit.xquery.compiler.optimizer.Optimizer;
-import org.brackit.xquery.compiler.optimizer.TopDownOptimizer;
-import org.brackit.xquery.compiler.translator.TopDownTranslator;
 import org.brackit.xquery.compiler.translator.Translator;
 
 public class RelationalCompilerChain extends CompileChain{
 
 	private static final Logger logger = Logger.getLogger(RelationalCompilerChain.class);
+
+	private RelationalOptimizer relationalOptimizer;
+	
+	public RelationalCompilerChain() {
+
+	}
 	
 	@Override
 	protected Optimizer getOptimizer(Map<QNm, Str> options) {
 		logger.debug("Start optimizing");
-		return new RelationalOptimizer(options);
+		relationalOptimizer = new RelationalOptimizer(options);
+		return relationalOptimizer;
 	}
 
 	@Override
 	protected Translator getTranslator(Map<QNm, Str> options) {
 		logger.debug("Start translation");
-		return new RelationalTranslator(options);
+		RelationalTranslator relationalTranslator = new RelationalTranslator(options);
+		relationalTranslator.setProjectionMap(relationalOptimizer.getProjectionMap());
+		return relationalTranslator;
 	}
 
 }

@@ -28,24 +28,53 @@
 package org.brackit.supplier.compiler.optimizer;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.brackit.xquery.atomic.QNm;
 import org.brackit.xquery.compiler.AST;
 import org.brackit.xquery.compiler.XQ;
 import org.brackit.xquery.compiler.optimizer.walker.Walker;
 
-public final class TableIdentifierWalker extends Walker{
+/**
+ * Build Map between XQuery binded variables and StepExprs.
+ * 
+ * @author Volodymyr Grachov
+ */
+public final class ProjectionWalker extends Walker {
 	
-	private static final Logger logger = Logger.getLogger(TableIdentifierWalker.class);
+	private static final Logger logger = Logger.getLogger(ProjectionWalker.class);
 	
-	public TableIdentifierWalker(){
+	// map binded variable to list of StepExprs
+	private Map<String,Set<String>> projectionMap = new HashMap<String,Set<String>>();
+	
+	public ProjectionWalker() {
 
 	}
 	
-	protected AST visit(AST node){
+	protected AST visit(AST node) {
+		if (node.getType() == XQ.PathExpr) {
+			String bindedVariable = node.getChild(0).getStringValue();
+			String accessedPath = ((QNm)node.getChild(1).getChild(1).getChild(0).getValue()).stringValue();
+			logger.info(bindedVariable+" - "+accessedPath);
+			Set<String> accessedPathsExpr = null;
+			if (projectionMap.containsKey(bindedVariable)) {
+				accessedPathsExpr = projectionMap.get(bindedVariable);
+			} else {
+				accessedPathsExpr = new HashSet<String>();
+			}
+			accessedPathsExpr.add(accessedPath);
+			projectionMap.put(bindedVariable, accessedPathsExpr);
+		}
 		return node;
 	}
 	
-	
+	/**
+	 * return copy of projection map
+	 */
+	public Map<String,Set<String>> getProjectionMap() {
+		return new HashMap<String, Set<String>>(projectionMap);
+	}
 }

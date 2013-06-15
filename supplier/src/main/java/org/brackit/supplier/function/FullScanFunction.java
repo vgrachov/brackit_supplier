@@ -28,6 +28,8 @@
 
 package org.brackit.supplier.function;
 
+import java.util.Set;
+
 import org.brackit.relational.api.transaction.ITransaction;
 import org.brackit.supplier.RelationalQueryContext;
 import org.brackit.xquery.QueryContext;
@@ -43,6 +45,8 @@ import org.brackit.xquery.xdm.type.Cardinality;
 import org.brackit.xquery.xdm.type.DocumentType;
 import org.brackit.xquery.xdm.type.SequenceType;
 
+import com.google.common.base.Preconditions;
+
 public class FullScanFunction extends Collection{
 	public static final QNm FN_COLLECTION = new QNm(Namespaces.FN_NSURI, Namespaces.FN_PREFIX, "collection");
 	public static final Signature SIGNATURE = new Signature(
@@ -50,20 +54,21 @@ public class FullScanFunction extends Collection{
 			new SequenceType(AtomicType.STR, Cardinality.ZeroOrOne));
 	
 	private final String tableName;
+	private final Set<String> projectionFields;
 	
-	public FullScanFunction(String tableName){
+	public FullScanFunction(String tableName, Set<String> projectionFields){
 		super(FN_COLLECTION, SIGNATURE);
 		this.tableName = tableName;
+		this.projectionFields = projectionFields;
 	}
 	
 	@Override
 	public Sequence execute(StaticContext sctx, QueryContext ctx,
-			Sequence[] args) throws QueryException
-	{
+			Sequence[] args) throws QueryException {
+		Preconditions.checkNotNull(projectionFields);
 		RelationalQueryContext context = (RelationalQueryContext)ctx;
 		ITransaction transaction = context.getTransaction();
-		return context.getStore().fullscan(tableName,transaction);
+		return context.getStore().fullscan(tableName,transaction,projectionFields);
 	}
-
 }
 

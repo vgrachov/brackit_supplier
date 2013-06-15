@@ -16,6 +16,8 @@
 package org.brackit.supplier.compiler.translator;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -54,11 +56,15 @@ import org.brackit.xquery.xdm.Function;
 public class RelationalTranslator extends TopDownTranslator {
 
 	private static final Logger logger = Logger.getLogger(RelationalTranslator.class);
+	private Map<String,Set<String>> projectionMap;
 	
 	public RelationalTranslator(Map<QNm, Str> options) {
 		super(options);
 	}
 	
+	public void setProjectionMap(Map<String,Set<String>> projectionMap) {
+		this.projectionMap = projectionMap; 
+	}
 	
 	protected List<AST> foundPredicates(AST node) {
 		if (node==null) 
@@ -87,8 +93,10 @@ public class RelationalTranslator extends TopDownTranslator {
 		if (valueNode.getType() == XQ.Dec){
 			value = (Dec)valueNode.getValue();
 			logger.debug("Equal match value : "+value );
-		}else
+		}else {
+			logger.fatal("Type can't be process "+value);
 			throw new IllegalArgumentException("Type can't be process "+value);
+		}
 		return value;
 	}
 	
@@ -97,10 +105,12 @@ public class RelationalTranslator extends TopDownTranslator {
 			AST accessNode = comparisonExpresions.get(i);
 			if (accessNode.getChild(0).getType() == XQ.GeneralCompEQ){
 				QNm accessField = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
-				logger.debug("Aceess to field : "+accessField);
-				AST valueNode = accessNode.getChild(2);
-				org.brackit.xquery.atomic.Atomic value = getValueFromNode(valueNode);
-				return new EqualAccessColumn(null, tableName.stringValue(), accessField.localName, value);
+				logger.info("Aceess to field : "+accessField);
+				if (accessNode.getChild(2).getType() != XQ.ParenthesizedExpr) {
+					AST valueNode = accessNode.getChild(2);
+					org.brackit.xquery.atomic.Atomic value = getValueFromNode(valueNode);
+					return new EqualAccessColumn(null, tableName.stringValue(), accessField.localName, value);
+				}
 			}
 		}
 		return null;
@@ -209,36 +219,55 @@ public class RelationalTranslator extends TopDownTranslator {
 				logger.debug("Found selection");
 				List<AST> comparisonExpresions = foundPredicates(parent.getChild(2));
 				Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
-				AccessColumn accessColumn = selectAccessColumn(comparisonExpresions,tableName);
+				String bindedVariable = parent.getChild(0).getChild(0).getStringValue();
+				Set<String> projectionFields = projectionMap.get(bindedVariable);
+				logger.info("Projection test "+bindedVariable);
+				for (String field : projectionFields ) {
+					logger.info(field);
+				}
+				/*AccessColumn accessColumn = selectAccessColumn(comparisonExpresions,tableName);
 				if (accessColumn!=null){
 					if (accessColumn instanceof RangeAccessColumn){
 						System.out.println("Found range acess "+((RangeAccessColumn)accessColumn).getAccessColumn());
-						Function fn = new RangeAccessFunction((RangeAccessColumn)accessColumn);
+						Function fn = new RangeAccessFunction((RangeAccessColumn)accessColumn, projectionFields);
 						return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 					}else{
 						if (accessColumn instanceof EqualAccessColumn){
 							System.out.println("Found equal match "+((EqualAccessColumn)accessColumn).getAccessColumn());
 							System.out.println("Found equal value "+((EqualAccessColumn)accessColumn).getKey());
-							Function fn = new RangeAccessFunction((EqualAccessColumn)accessColumn);
+							Function fn = new RangeAccessFunction((EqualAccessColumn)accessColumn, projectionFields);
 							return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 						}else{
-							Function fn = new FullScanFunction(tableName.stringValue());
+							Function fn = new FullScanFunction(tableName.stringValue(), projectionFields);
 							return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 						}
 					}
-				}else{
-					Function fn = new FullScanFunction(tableName.stringValue());
+				}else{*/
+					logger.info(projectionFields);
+					Function fn = new FullScanFunction(tableName.stringValue(), projectionFields);
 					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
-				}
-			}else
+				//}
+			} else
+			if (parent!=null && parent.getType()==XQ.ForBind && parent.getChildCount()==3 && parent.getChild(2).getType()==XQ.End) {
+				logger.debug("Found Forbind without selection");
+				Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
+				String bindedVariable = parent.getChild(0).getChild(0).getStringValue();
+				Set<String> projectionFields = projectionMap.get(bindedVariable);
+				logger.info("Projection test "+bindedVariable);
+				logger.info(projectionFields);
+				Function fn = new FullScanFunction(tableName.stringValue(), projectionFields);
+				return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
+			} else
 				if (parent!=null && parent.getType()==XQ.ForBind && parent.getChildCount()==3){
 					Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
-					Function fn = new FullScanFunction(tableName.stringValue());
+					//TODO(vgrachov) : set map of fields from Schema
+					Function fn = new FullScanFunction(tableName.stringValue(), null);
 					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 				}else
 				if (parent!=null && parent.getType() == XQ.FilterExpr){
 					Str tableName = (Str)parent.getChild(0).getChild(0).getValue();
-					Function fn = new FullScanFunction(tableName.stringValue());
+					//TODO(vgrachov) : set map of fields from Schema
+					Function fn = new FullScanFunction(tableName.stringValue(), null);
 					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 				
 				}
