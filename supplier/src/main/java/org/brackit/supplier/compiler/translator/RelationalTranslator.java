@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.brackit.relational.metadata.tuple.Column;
+import org.brackit.relational.metadata.tuple.ColumnType;
 import org.brackit.supplier.access.AccessColumn;
 import org.brackit.supplier.access.EqualAccessColumn;
 import org.brackit.supplier.access.FullRangeAccessColumn;
@@ -51,6 +53,8 @@ import org.brackit.xquery.function.FunctionExpr;
 import org.brackit.xquery.operator.Operator;
 import org.brackit.xquery.xdm.Expr;
 import org.brackit.xquery.xdm.Function;
+
+import com.google.common.collect.ImmutableSet;
 
 
 public class RelationalTranslator extends TopDownTranslator {
@@ -210,6 +214,30 @@ public class RelationalTranslator extends TopDownTranslator {
 		return super.anyOp(in, node);
 	}
 	
+	private Set<String> getFields(String tableName) {
+		Set<String> projectionFields = null;
+		if ("lineitem".equals(tableName))
+			projectionFields = ImmutableSet.of("l_orderkey", "l_partkey", "l_suppkey", "l_linenumber", "l_quantity", "l_extendedprice", "l_discount", "l_tax", "l_returnflag", "l_linestatus", "l_shipdate", "l_commitdate", "l_receiptdate", "l_shipinstruct", "l_shipmode", "l_comment");
+		else
+		if ("orders".equals(tableName))
+			projectionFields = ImmutableSet.of("o_orderkey", "o_custkey", "o_orderstatus", "o_totalprice", "o_orderdate", "o_orderpriority", "o_clerk", "o_shippriority", "o_comment");
+		else
+		if ("customer".equals(tableName))
+			projectionFields = ImmutableSet.of("c_custkey", "c_name", "c_address", "c_nationkey", "c_phone", "c_acctbal", "c_mktsegment", "c_comment");
+		else
+		if ("supplier".equals(tableName))
+			projectionFields = ImmutableSet.of("s_suppkey", "s_name", "s_address", "s_nationkey", "s_phone", "s_acctbal", "s_comment");
+		else
+		if ("nation".equals(tableName))
+			projectionFields = ImmutableSet.of("n_nationkey", "n_name", "n_regionkey", "n_comment");
+		else
+		if ("region".equals(tableName))
+			projectionFields = ImmutableSet.of("r_regionkey", "r_name", "r_comment");
+		else
+		if ("part".equals(tableName))
+			projectionFields = ImmutableSet.of("p_partkey", "p_name", "p_mfgr", "p_brand", "p_type", "p_size", "p_container", "p_retailprice", "p_comment");
+		return projectionFields;
+	}
 
 	protected Expr anyExpr(AST node) throws QueryException {
 		logger.debug("Found expression :"+node.getStringValue()+" "+node.getType());
@@ -221,11 +249,11 @@ public class RelationalTranslator extends TopDownTranslator {
 				Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
 				String bindedVariable = parent.getChild(0).getChild(0).getStringValue();
 				Set<String> projectionFields = projectionMap.get(bindedVariable);
-				logger.info("Projection test "+bindedVariable);
-				for (String field : projectionFields ) {
-					logger.info(field);
-				}
-				/*AccessColumn accessColumn = selectAccessColumn(comparisonExpresions,tableName);
+				//logger.info("Projection test "+bindedVariable+" "+projectionFields);
+				
+				//Set<String> projectionFields = getFields(tableName.stringValue());
+
+				AccessColumn accessColumn = selectAccessColumn(comparisonExpresions,tableName);
 				if (accessColumn!=null){
 					if (accessColumn instanceof RangeAccessColumn){
 						System.out.println("Found range acess "+((RangeAccessColumn)accessColumn).getAccessColumn());
@@ -242,19 +270,19 @@ public class RelationalTranslator extends TopDownTranslator {
 							return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 						}
 					}
-				}else{*/
-					logger.info(projectionFields);
+				}else{
 					Function fn = new FullScanFunction(tableName.stringValue(), projectionFields);
 					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
-				//}
+				}
 			} else
-			if (parent!=null && parent.getType()==XQ.ForBind && parent.getChildCount()==3 && parent.getChild(2).getType()==XQ.End) {
+			if (parent!=null && parent.getType()==XQ.ForBind && parent.getChildCount()==3 && (parent.getChild(2).getType()==XQ.End || parent.getChild(2).getType()==XQ.ForBind) ) {
 				logger.debug("Found Forbind without selection");
 				Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
 				String bindedVariable = parent.getChild(0).getChild(0).getStringValue();
 				Set<String> projectionFields = projectionMap.get(bindedVariable);
-				logger.info("Projection test "+bindedVariable);
-				logger.info(projectionFields);
+				logger.info("Projection test "+bindedVariable+" "+projectionFields);
+
+				//Set<String> projectionFields = getFields(tableName.stringValue());
 				Function fn = new FullScanFunction(tableName.stringValue(), projectionFields);
 				return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 			} else
