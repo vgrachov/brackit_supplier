@@ -1,23 +1,32 @@
 /*******************************************************************************
- * Copyright 2012 Volodymyr Grachov
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * [New BSD License]
+ *   Copyright (c) 2012-2013, Volodymyr Grachov <vladimir.grachov@gmail.com>  
+ *   All rights reserved.
+ *   
+ *   Redistribution and use in source and binary forms, with or without
+ *   modification, are permitted provided that the following conditions are met:
+ *       * Redistributions of source code must retain the above copyright
+ *         notice, this list of conditions and the following disclaimer.
+ *       * Redistributions in binary form must reproduce the above copyright
+ *         notice, this list of conditions and the following disclaimer in the
+ *         documentation and/or other materials provided with the distribution.
+ *       * Neither the name of the Brackit Project Team nor the
+ *         names of its contributors may be used to endorse or promote products
+ *         derived from this software without specific prior written permission.
+ *   
+ *   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ *   DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ *   ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ *   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ *   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ *   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 package org.brackit.supplier.compiler.translator;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -25,24 +34,21 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.brackit.relational.metadata.tuple.Column;
-import org.brackit.relational.metadata.tuple.ColumnType;
 import org.brackit.supplier.access.AccessColumn;
+import org.brackit.supplier.access.BothRangeAccessColumn;
 import org.brackit.supplier.access.EqualAccessColumn;
-import org.brackit.supplier.access.FullRangeAccessColumn;
 import org.brackit.supplier.access.LeftRangeAccessColumn;
 import org.brackit.supplier.access.RangeAccessColumn;
 import org.brackit.supplier.access.RightRangeAccessColumn;
-import org.brackit.supplier.collection.RangeAccessCollection;
+import org.brackit.supplier.cost.CostManager;
+import org.brackit.supplier.cost.ICostManager;
 import org.brackit.supplier.expr.DeleteExpr;
 import org.brackit.supplier.expr.InsertExpr;
 import org.brackit.supplier.function.FullScanFunction;
 import org.brackit.supplier.function.RangeAccessFunction;
 import org.brackit.xquery.QueryException;
-import org.brackit.xquery.atomic.AbstractAtomic;
 import org.brackit.xquery.atomic.Atomic;
 import org.brackit.xquery.atomic.Dec;
-import org.brackit.xquery.atomic.Int;
 import org.brackit.xquery.atomic.Int32;
 import org.brackit.xquery.atomic.QNm;
 import org.brackit.xquery.atomic.Str;
@@ -54,37 +60,33 @@ import org.brackit.xquery.operator.Operator;
 import org.brackit.xquery.xdm.Expr;
 import org.brackit.xquery.xdm.Function;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 
 
 public class RelationalTranslator extends TopDownTranslator {
 
 	private static final Logger logger = Logger.getLogger(RelationalTranslator.class);
+	
 	private Map<String,Set<String>> projectionMap;
+	private Map<String,List<AST>> comparisonMap;
+	
+	private final ICostManager costManager; 
 	
 	public RelationalTranslator(Map<QNm, Str> options) {
 		super(options);
+		costManager = new CostManager();
 	}
 	
 	public void setProjectionMap(Map<String,Set<String>> projectionMap) {
 		this.projectionMap = projectionMap; 
 	}
 	
-	protected List<AST> foundPredicates(AST node) {
-		if (node==null) 
-			return new ArrayList<AST>();
-		List<AST> comparisonPredicates = new ArrayList<AST>();
-		for (int i=0;i<node.getChildCount();i++)
-			if (node.getChild(i).getType() == XQ.ComparisonExpr && node.getChild(i).getChildCount()==3 && node.getChild(i).getChild(1).getType()==XQ.PathExpr && node.getChild(i).getChild(2).getType()!=XQ.PathExpr)
-				comparisonPredicates.add(node.getChild(i));
-		for (int i=0;i<node.getChildCount();i++)
-			if (node.getChild(i).getType() == XQ.AndExpr || node.getChild(i).getType() == XQ.OrExpr){
-				comparisonPredicates.addAll(foundPredicates(node.getChild(i)));
-			}
-		return comparisonPredicates;
+	public void setComparisonExprMap(Map<String,List<AST>> comparisonMap) {
+		this.comparisonMap = comparisonMap; 
 	}
 	
-	private org.brackit.xquery.atomic.Atomic getValueFromNode(AST valueNode){
+	private Atomic getValueFromNode(AST valueNode){
 		org.brackit.xquery.atomic.Atomic value = null;
 		if (valueNode.getType() == XQ.Str){
 			value = (Str)valueNode.getValue();
@@ -104,103 +106,125 @@ public class RelationalTranslator extends TopDownTranslator {
 		return value;
 	}
 	
-	private EqualAccessColumn findEqualAccessPredicate(List<AST> comparisonExpresions, Str tableName){
-		for (int i=0;i<comparisonExpresions.size();i++){
-			AST accessNode = comparisonExpresions.get(i);
-			if (accessNode.getChild(0).getType() == XQ.GeneralCompEQ){
-				QNm accessField = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
+	private EqualAccessColumn findEqualAccessPredicate(String bindVariable, List<AST> comparisonExpresions, Str tableName){
+		Preconditions.checkNotNull(tableName);
+		if (comparisonExpresions == null) return null;
+
+		logger.info("Finding equal mathcing checking for variable "+bindVariable);
+		for (int i=0; i<comparisonExpresions.size(); i++){
+			AST comparisonExpr = comparisonExpresions.get(i);
+			if (comparisonExpr.getChild(0).getType() == XQ.GeneralCompEQ){
+				QNm accessField = (QNm)comparisonExpr.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
 				logger.info("Aceess to field : "+accessField);
-				if (accessNode.getChild(2).getType() != XQ.ParenthesizedExpr) {
-					AST valueNode = accessNode.getChild(2);
-					org.brackit.xquery.atomic.Atomic value = getValueFromNode(valueNode);
-					return new EqualAccessColumn(null, tableName.stringValue(), accessField.localName, value);
+				if (comparisonExpr.getChild(2).getType() != XQ.ParenthesizedExpr) {
+					AST valueNode = comparisonExpr.getChild(2);
+					Atomic value = getValueFromNode(valueNode);
+					logger.info("Equal mathcing is found "+accessField.getLocalName());
+					return new EqualAccessColumn(bindVariable, tableName.stringValue(), accessField.getLocalName(), value);
 				}
 			}
 		}
 		return null;
 	}
 	
-	private FullRangeAccessColumn findFullRangeAccessColumn(List<AST> comparisonExpresions, Str tableName){
-		Set<String> allAccessedFields = new HashSet<String>();
-		for (int i=0;i<comparisonExpresions.size();i++){
-			AST accessNode = comparisonExpresions.get(i);
-			QNm accessField = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
-			allAccessedFields.add(accessField.getLocalName());
+	private BothRangeAccessColumn findFullRangeAccessColumn(String bindVariable, List<AST> comparisonExpresions, Str tableName) {
+		Preconditions.checkNotNull(tableName);
+		if (comparisonExpresions == null) return null;
+
+		Set<String> accessedFields = new HashSet<String>();
+		for (int i=0; i<comparisonExpresions.size(); i++) {
+			AST comparisonNode = comparisonExpresions.get(i);
+			QNm accessField = (QNm)comparisonNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
+			accessedFields.add(accessField.getLocalName());
 		}
-		Iterator<String> i = allAccessedFields.iterator();
-		while (i.hasNext()){
-			String accessField = i.next();
-			AST leftAccessNode = null;
-			AST rightAccessNode = null;
+		Iterator<String> fieldIterator = accessedFields.iterator();
+		while (fieldIterator.hasNext()) {
+			String comparedFieldName = fieldIterator.next();
 			boolean isRightRangeFound = false;
 			boolean isLeftRangeFound = false;
 			Atomic rightKey = null;
 			Atomic leftKey = null;
-			for (int j=0;j<comparisonExpresions.size();j++){
+			
+			AST leftBoundComparisonExpr = null;
+			AST rightBoundComparisonExpr = null;
+			
+			for (int j=0; j<comparisonExpresions.size(); j++) {
 				AST accessNode = comparisonExpresions.get(j);
 				QNm accessFieldQNm = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
-				if (accessFieldQNm.getLocalName().equals(accessField)){
+				if (accessFieldQNm.getLocalName().equals(comparedFieldName)) {
 					if (accessNode.getChild(0).getType()==XQ.GeneralCompLE || accessNode.getChild(0).getType()==XQ.GeneralCompLT ||
 						accessNode.getChild(0).getType()==XQ.ValueCompLE || accessNode.getChild(0).getType()==XQ.ValueCompLT){
 						isRightRangeFound = true;
+						rightBoundComparisonExpr = accessNode;
 						rightKey = getValueFromNode(accessNode.getChild(2));
-					}else
+					} else
 					if (accessNode.getChild(0).getType()==XQ.GeneralCompGE || accessNode.getChild(0).getType()==XQ.GeneralCompGT ||
-						accessNode.getChild(0).getType()==XQ.ValueCompGE || accessNode.getChild(0).getType()==XQ.ValueCompGT){
+						accessNode.getChild(0).getType()==XQ.ValueCompGE || accessNode.getChild(0).getType()==XQ.ValueCompGT) {
 						isLeftRangeFound = true;
+						leftBoundComparisonExpr = accessNode;
 						leftKey = getValueFromNode(accessNode.getChild(2));
 					}
 				}
 			}
 			if (isRightRangeFound && isLeftRangeFound){
-				return new FullRangeAccessColumn(null, tableName.stringValue(), accessField, leftKey, rightKey);
+				double cost = costManager.getCostEstimation(tableName.stringValue(), comparedFieldName, leftKey, rightKey);
+				return new BothRangeAccessColumn(bindVariable, tableName.stringValue(), comparedFieldName, leftKey, rightKey, cost, 
+						leftBoundComparisonExpr, rightBoundComparisonExpr);
 			}
 		}
 		return null;
 	}
 	
-	private RightRangeAccessColumn findFirstRightRangeAccessPredicate(List<AST> comparisonExpresions, Str tableName){
-		for (int i=0;i<comparisonExpresions.size();i++){
-			AST accessNode = comparisonExpresions.get(i);
-			if (accessNode.getChild(0).getType()==XQ.GeneralCompLE || accessNode.getChild(0).getType()==XQ.GeneralCompLT ||
-				accessNode.getChild(0).getType()==XQ.ValueCompLE || accessNode.getChild(0).getType()==XQ.ValueCompLT){
-				QNm accessField = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
-				Atomic rightKey = getValueFromNode(accessNode.getChild(2));
-				return new RightRangeAccessColumn(null, tableName.stringValue(), accessField.getLocalName(), rightKey);
+	private RightRangeAccessColumn findFirstRightRangeAccessPredicate(String bindVariable, List<AST> comparisonExpresions, Str tableName){
+		Preconditions.checkNotNull(tableName);
+		if (comparisonExpresions == null) return null;
+
+		for (int i=0; i<comparisonExpresions.size(); i++) {
+			AST comparisonNode = comparisonExpresions.get(i);
+			if (comparisonNode.getChild(0).getType()==XQ.GeneralCompLE || comparisonNode.getChild(0).getType()==XQ.GeneralCompLT ||
+				comparisonNode.getChild(0).getType()==XQ.ValueCompLE || comparisonNode.getChild(0).getType()==XQ.ValueCompLT) {
+				QNm accessField = (QNm)comparisonNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
+				Atomic rightKey = getValueFromNode(comparisonNode.getChild(2));
+				double cost = costManager.getCostEstimation(tableName.stringValue(), accessField.getLocalName(), null, rightKey);
+				return new RightRangeAccessColumn(bindVariable, tableName.stringValue(), accessField.getLocalName(), rightKey, cost, comparisonNode);
 			}
 		}
 		return null;
 	}
 
-	private LeftRangeAccessColumn findFirstLeftRangeAccessPredicate(List<AST> comparisonExpresions, Str tableName){
-		for (int i=0;i<comparisonExpresions.size();i++){
-			AST accessNode = comparisonExpresions.get(i);
-			if (accessNode.getChild(0).getType()==XQ.GeneralCompGE || accessNode.getChild(0).getType()==XQ.GeneralCompGT ||
-				accessNode.getChild(0).getType()==XQ.ValueCompGE || accessNode.getChild(0).getType()==XQ.ValueCompGT){
-				QNm accessField = (QNm)accessNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
-				Atomic rightKey = getValueFromNode(accessNode.getChild(2));
-				return new LeftRangeAccessColumn(null, tableName.stringValue(), accessField.getLocalName(), rightKey);
+	private LeftRangeAccessColumn findFirstLeftRangeAccessPredicate(String bindVariable, List<AST> comparisonExpresions, Str tableName){
+		Preconditions.checkNotNull(tableName);
+		if (comparisonExpresions == null) return null;
+
+		for (int i=0; i<comparisonExpresions.size(); i++){
+			AST comparisonNode = comparisonExpresions.get(i);
+			if (comparisonNode.getChild(0).getType()==XQ.GeneralCompGE || comparisonNode.getChild(0).getType()==XQ.GeneralCompGT ||
+				comparisonNode.getChild(0).getType()==XQ.ValueCompGE || comparisonNode.getChild(0).getType()==XQ.ValueCompGT){
+				QNm accessField = (QNm)comparisonNode.getChild(1).getChild(1).getChild(1).getChild(0).getValue();
+				Atomic leftKey = getValueFromNode(comparisonNode.getChild(2));
+				double cost = costManager.getCostEstimation(tableName.stringValue(), accessField.getLocalName(), leftKey, null);
+				return new LeftRangeAccessColumn(bindVariable, tableName.stringValue(), accessField.getLocalName(), leftKey, cost, comparisonNode);
 			}
 		}
 		return null;
 	}
 	
-	private AccessColumn selectAccessColumn(List<AST> comparisonExpresions, Str tableName){
+	private AccessColumn selectAccessColumn(String bindVariable, List<AST> comparisonExpresions, Str tableName){
 		logger.debug("Access table : "+tableName);
-		EqualAccessColumn equalAccessColumn = findEqualAccessPredicate(comparisonExpresions, tableName);
-		if (equalAccessColumn!=null)
+		EqualAccessColumn equalAccessColumn = findEqualAccessPredicate(bindVariable, comparisonExpresions, tableName);
+		if (equalAccessColumn!=null) {
 			return equalAccessColumn;
-		else{
-			FullRangeAccessColumn fullRangeAccessColumn = findFullRangeAccessColumn(comparisonExpresions, tableName);
-			if (fullRangeAccessColumn!=null)
+		} else {
+			BothRangeAccessColumn fullRangeAccessColumn = findFullRangeAccessColumn(bindVariable, comparisonExpresions, tableName);
+			if (fullRangeAccessColumn != null) {
 				return fullRangeAccessColumn;
-			else{
-				RightRangeAccessColumn rightRangeAccessColumn = findFirstRightRangeAccessPredicate(comparisonExpresions, tableName);
-				if (rightRangeAccessColumn!=null)
+			} else {
+				RightRangeAccessColumn rightRangeAccessColumn = findFirstRightRangeAccessPredicate(bindVariable, comparisonExpresions, tableName);
+				if (rightRangeAccessColumn != null) {
 					return rightRangeAccessColumn;
-				else{
-					LeftRangeAccessColumn leftRangeAccessColumn = findFirstLeftRangeAccessPredicate(comparisonExpresions, tableName);
-					if (leftRangeAccessColumn!=null)
+				} else {
+					LeftRangeAccessColumn leftRangeAccessColumn = findFirstLeftRangeAccessPredicate(bindVariable, comparisonExpresions, tableName);
+					if (leftRangeAccessColumn != null)
 						return leftRangeAccessColumn;
 					else return null;
 				}
@@ -239,33 +263,54 @@ public class RelationalTranslator extends TopDownTranslator {
 		return projectionFields;
 	}
 
+	private void removeCondition(AST removingNode) {
+		AST selectionNode = removingNode.getParent();
+		AST forbindNode = selectionNode.getParent();
+		forbindNode.replaceChild(2, selectionNode.getLastChild());
+	}
+	
 	protected Expr anyExpr(AST node) throws QueryException {
 		logger.debug("Found expression :"+node.getStringValue()+" "+node.getType());
 		if (node.getType()==XQ.FunctionCall && ((QNm)node.getValue()).getLocalName().equals("collection")){
 			AST parent = node.getParent();
 			if (parent!=null && parent.getType()==XQ.ForBind && parent.getChildCount()==3 && parent.getChild(2).getType()==XQ.Selection){
 				logger.debug("Found selection");
-				List<AST> comparisonExpresions = foundPredicates(parent.getChild(2));
-				Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
+				
 				String bindedVariable = parent.getChild(0).getChild(0).getStringValue();
+				List<AST> comparisonExpresions = comparisonMap.get(bindedVariable);
+				
+				Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
 				Set<String> projectionFields = projectionMap.get(bindedVariable);
-				//logger.info("Projection test "+bindedVariable+" "+projectionFields);
+				logger.info("Projection test "+bindedVariable+" "+projectionFields);
 				
 				//Set<String> projectionFields = getFields(tableName.stringValue());
 
-				AccessColumn accessColumn = selectAccessColumn(comparisonExpresions,tableName);
+				AccessColumn accessColumn = selectAccessColumn(bindedVariable, comparisonExpresions, tableName);
 				if (accessColumn!=null){
-					if (accessColumn instanceof RangeAccessColumn){
-						System.out.println("Found range acess "+((RangeAccessColumn)accessColumn).getAccessColumn());
-						Function fn = new RangeAccessFunction((RangeAccessColumn)accessColumn, projectionFields);
+					if (accessColumn instanceof EqualAccessColumn) {
+						EqualAccessColumn equalMathingColumn = ((EqualAccessColumn)accessColumn);
+						logger.info("Found equal match "+equalMathingColumn.getAccessColumn());
+						logger.info("Found equal value "+equalMathingColumn.getKey());
+						Function fn = new RangeAccessFunction(equalMathingColumn, projectionFields);
 						return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
-					}else{
-						if (accessColumn instanceof EqualAccessColumn){
-							System.out.println("Found equal match "+((EqualAccessColumn)accessColumn).getAccessColumn());
-							System.out.println("Found equal value "+((EqualAccessColumn)accessColumn).getKey());
-							Function fn = new RangeAccessFunction((EqualAccessColumn)accessColumn, projectionFields);
+					} else {
+						if (accessColumn instanceof RangeAccessColumn && ((RangeAccessColumn)accessColumn).getCost() < 0.4) {
+							RangeAccessColumn rangeAccessColumn = ((RangeAccessColumn)accessColumn);
+							
+							if (rangeAccessColumn instanceof BothRangeAccessColumn) {
+								removeCondition(((BothRangeAccessColumn)rangeAccessColumn).getLeftBoundComparisonExpr());
+								removeCondition(((BothRangeAccessColumn)rangeAccessColumn).getRighBoundComparisonExpr());
+							} else
+								if (rangeAccessColumn instanceof LeftRangeAccessColumn) 
+									removeCondition(((LeftRangeAccessColumn)rangeAccessColumn).getLeftBoundComparisonExpr());
+								else
+									if (rangeAccessColumn instanceof RightRangeAccessColumn) 
+										removeCondition(((RightRangeAccessColumn)rangeAccessColumn).getRightBoundComparisonExpr());
+							
+							logger.info("Found range access "+rangeAccessColumn.getAccessColumn()+" with cost "+rangeAccessColumn.getCost());
+							Function fn = new RangeAccessFunction((RangeAccessColumn)accessColumn, projectionFields);
 							return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
-						}else{
+						} else {
 							Function fn = new FullScanFunction(tableName.stringValue(), projectionFields);
 							return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 						}
@@ -275,7 +320,8 @@ public class RelationalTranslator extends TopDownTranslator {
 					return new FunctionExpr(node.getStaticContext(), fn, super.anyExpr(node.getLastChild()));
 				}
 			} else
-			if (parent!=null && parent.getType()==XQ.ForBind && parent.getChildCount()==3 && (parent.getChild(2).getType()==XQ.End || parent.getChild(2).getType()==XQ.ForBind) ) {
+			if (parent!=null && parent.getType()==XQ.ForBind && parent.getChildCount()==3 && (parent.getChild(2).getType()==XQ.End || parent.getChild(2).getType()==XQ.ForBind 
+			|| parent.getChild(2).getType()==XQ.LetBind) ) {
 				logger.debug("Found Forbind without selection");
 				Str tableName = (Str)parent.getChild(1).getChild(0).getValue();
 				String bindedVariable = parent.getChild(0).getChild(0).getStringValue();

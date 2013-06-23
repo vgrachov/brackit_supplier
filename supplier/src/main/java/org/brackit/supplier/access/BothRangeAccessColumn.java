@@ -25,52 +25,39 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-package org.brackit.supplier.io.helper;
+package org.brackit.supplier.access;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import org.brackit.xquery.atomic.Atomic;
+import org.brackit.xquery.compiler.AST;
 
-
-public class IOHelper {
-
-	private static final String querySeparator = "break";
-	private static final String lineSeparator = System.getProperty("line.separator");
-	private static final IOHelper instance = new IOHelper();
+public final class BothRangeAccessColumn extends RangeAccessColumn {
 	
-	private IOHelper(){
-		
+	private final Atomic leftKey,rightKey;
+	private final AST leftBoundComparisonExpr, righBoundComparisonExpr;
+	
+	public BothRangeAccessColumn(String bindVariable, String tableName,
+			String accessColumn, Atomic leftKey, Atomic rightKey, double cost, 
+			AST leftBoundComparisonExpr, AST righBoundComparisonExpr) {
+		super(bindVariable, tableName, accessColumn, cost);
+		this.leftKey = leftKey;
+		this.rightKey = rightKey;
+		this.leftBoundComparisonExpr = leftBoundComparisonExpr;
+		this.righBoundComparisonExpr = righBoundComparisonExpr;
 	}
-	
-	public static IOHelper getInstance(){
-		return instance;
+
+	public AST getLeftBoundComparisonExpr() {
+		return leftBoundComparisonExpr;
 	}
-	
-	public List<String> getContent(File file) throws IOException{
-		Scanner scanner = null;
-		try {
-			scanner = new Scanner(new FileInputStream(file));
-			StringBuilder query = new StringBuilder();
-			List<String> queryList = new ArrayList<String>();
-			while (scanner.hasNextLine()){
-				String line = scanner.nextLine();
-				if (querySeparator.equals(line)){
-					queryList.add(query.toString());
-					query = new StringBuilder();
-				}else
-					query.append(line).append(lineSeparator);
-			}
-			if (query.length()!=0) queryList.add(query.toString());
-			scanner.close();
-			return queryList;
-		} catch (FileNotFoundException e) {
-			throw e;
-		} finally{
-			scanner.close();
-		}
+
+	public AST getRighBoundComparisonExpr() {
+		return righBoundComparisonExpr;
+	}
+
+	public Atomic getLeftKey() {
+		return leftKey;
+	}
+
+	public Atomic getRightKey() {
+		return rightKey;
 	}
 }
